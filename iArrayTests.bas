@@ -1,137 +1,165 @@
 Attribute VB_Name = "iArrayTests"
 Option Explicit
+Private iArr As iArray
+Private iArr1 As iArray
+Private iArr2 As iArray
 
 Public Sub iArrayTest()
   ' ##### PUSH / POP TEST
   Debug.Print vbCrLf & " #### Push/Pop test"
-  Dim arrPP As New iArray
-  arrPP.PushArray Array("a", True, 1)
-  Debug.Print arrPP.Push("Hello world")          ' 4
-  Debug.Print arrPP.ToString                     ' {"a",True,1,"Hello world"}
-  arrPP.Pop
-  arrPP.Pop
-  Debug.Print arrPP.Pop                          ' True
-  arrPP.Pop
-  Debug.Print arrPP.Pop                          ' Null
-  Debug.Print arrPP.ToString                     ' {}
+  Set iArr = New iArray
+  iArr.PushArray Array("a", True, 1)
+  Debug.Print iArr.Push("Hello world")           ' 4
+  Debug.Print iArr.ToString                      ' {"a",True,1,"Hello world"}
+  iArr.Pop
+  iArr.Pop
+  Debug.Print iArr.Pop                           ' True
+  iArr.Pop
+  Debug.Print iArr.Pop                           ' Empty value
+  Debug.Print iArr.ToString                      ' {}
   
   ' ##### SHIFT / UNSHIFT TEST
   Debug.Print vbCrLf & " #### Shift/Unshift test"
-  Dim arrSU As New iArray
-  arrSU.Unshift "..."
-  Debug.Print arrSU.ToString                     ' {"..."}
-  arrSU.Unshift 123456
-  arrSU.UnshiftArray Array(3.1415, Empty, vbNullString, "a")
-  Debug.Print arrSU.ToString                     ' {3.1415,,"","a",123456,"..."}
-  Debug.Print arrSU.Shift                        ' 3.1415
-  Debug.Print arrSU.Shift                        ' Null
-  Debug.Print arrSU.Shift                        '
-  Debug.Print arrSU.ToString                     ' {"a",123456,"..."}
+  Set iArr = New iArray
+  iArr.Unshift "..."
+  Debug.Print iArr.ToString                      ' {"..."}
+  iArr.Unshift 123456
+  iArr.UnshiftArray Array(3.1415, Empty, vbNullString, "a")
+  Debug.Print iArr.ToString                      ' {3.1415,,"","a",123456,"..."}
+  Debug.Print iArr.Shift                         ' 3.1415
+  Debug.Print iArr.Shift                         ' Empty value
+  Debug.Print iArr.Shift                         '
+  Debug.Print iArr.ToString                      ' {"a",123456,"..."}
 
   ' ##### ENQUEUE / DEQUEUE TEST
   Debug.Print vbCrLf & " #### Enqueue/Dequeue test"
-  Dim arrED As New iArray
-  arrED.Enqueue ("Queued Item")
-  arrED.EnqueueArray Array(1, "2", 3.14, False, "Last")
-  Debug.Print arrED.Dequeue                      ' "Queued Item"
-  Debug.Print arrED.Dequeue                      ' 1
-  Debug.Print arrED.ToString                     ' {"2",3.14,False,"Last"}
+  Set iArr = New iArray
+  iArr.Enqueue ("Queued Item")
+  iArr.EnqueueArray Array(1, "2", 3.14, False, "Last")
+  Debug.Print iArr.Dequeue                       ' "Queued Item"
+  Debug.Print iArr.Dequeue                       ' 1
+  Debug.Print iArr.ToString                      ' {"2",3.14,False,"Last"}
   
   ' ##### DEFAULT MEMBERS TEST
   Debug.Print vbCrLf & " #### Default members test"
-  Dim arrDM As New iArray
-  arrDM.PushArray Array("1", 2, "3", 4)
-  Debug.Print arrDM(2)                           ' 2
-  arrDM(2) = "Two"
-  Debug.Print arrDM.ToString                     ' {"1","Two","3", 4}
+  Set iArr = New iArray
+  iArr.PushArray Array("1", 2, "3", 4)
+  Debug.Print iArr(2)                            ' 2
+  iArr(2) = "Two"
+  Debug.Print iArr.ToString                      ' {"1","Two","3", 4}
 
   ' ##### CLEAR ARRAY TEST
   Debug.Print vbCrLf & " #### Clear array test"
-  Dim arrCA As New iArray
-  arrCA.PushArray Array(1, 2, 3, 4, 5, "a", "b", "c", True, Empty)
-  Debug.Print arrCA.ToString                     ' {1,2,3,4,5,"a","b","c",True,}
-  arrCA.Clear
-  Debug.Print arrCA.ToString                     ' {}
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, 3, 4, 5, "a", "b", "c", True, Empty)
+  Debug.Print iArr.ToString                      ' {1,2,3,4,5,"a","b","c",True,}
+  iArr.Clear
+  Debug.Print iArr.ToString                      ' {}
   
   ' ##### COUNT OCCURENCES TEST
   Debug.Print vbCrLf & " #### Count occurences test"
-  Dim arrCO As New iArray
-  arrCO.PushArray Array(1, 2, 2, 1, 3, 1, 2)
-  Debug.Print arrCO.CountOccurences(2)           ' 3
-  Debug.Print arrCO.CountOccurences(4)           ' 0
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
+  Debug.Print iArr.CountOccurences(2)            ' 3
+  Debug.Print iArr.CountOccurences(4)            ' 0
   
   
   ' ##### CONTAINS TEST
   Debug.Print vbCrLf & " #### Contains test"
-  Dim arrCon As New iArray
-  arrCon.PushArray Array(1, 2, 2, 1, 3, 1, 2)
-  Debug.Print arrCon.Contains(1)                 ' True
-  Debug.Print arrCon.Contains(5)                 ' False
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
+  Debug.Print iArr.Contains(1)                   ' True
+  Debug.Print iArr.Contains(5)                   ' False
 
   ' ##### FIND DIFFERENCES TEST
   Debug.Print vbCrLf & " #### Difference test"
-  Dim arrDiff1 As New iArray
-  arrDiff1.PushArray Array(1, 2, 3)
-  Dim arrDiff2 As New iArray
-  arrDiff2.PushArray Array(2, 3, 4)
-  Dim arrDiff3 As New iArray
-  Set arrDiff3 = arrDiff2.Difference(arrDiff1)
-  Debug.Print arrDiff3.ToString                  ' {1,4}
-  Set arrDiff3 = arrDiff2.Difference(arrDiff1, "d")
-  Debug.Print arrDiff3.ToString                  ' {1}
-  Set arrDiff3 = arrDiff2.Difference(arrDiff1, "a")
-  Debug.Print arrDiff3.ToString                  ' {4}
+  Set iArr1 = New iArray
+  iArr1.PushArray Array(1, 2, 3)
+  Set iArr2 = New iArray
+  iArr2.PushArray Array(2, 3, 4)
+  Set iArr = iArr2.Difference(iArr1)
+  Debug.Print iArr.ToString                      ' {1,4}
+  Set iArr = iArr2.Difference(iArr1, "d")
+  Debug.Print iArr.ToString                      ' {1}
+  Set iArr = iArr2.Difference(iArr1, "a")
+  Debug.Print iArr.ToString                      ' {4}
   
   ' ##### JOINING ARRAYS TEST
   Debug.Print vbCrLf & " #### Joining arrays test"
-  Dim arrJA1 As New iArray
-  arrJA1.PushArray Array(1, 2, 3, "a", "b", "c")
-  Dim arrJA2 As New iArray
-  arrJA2.PushArray Array(4, 5, 6, "d", "e", "f")
-  Dim arrJoined As iArray
-  Set arrJoined = arrJA1.Join(arrJA2)
-  Debug.Print arrJoined.ToString                 ' {1,2,3,"a","b","c",4,5,6,"d","e","f"}
+  Set iArr1 = New iArray
+  iArr1.PushArray Array(1, 2, 3, "a", "b", "c")
+  Set iArr2 = New iArray
+  iArr2.PushArray Array(4, 5, 6, "d", "e", "f")
+  Set iArr = iArr1.Join(iArr2)
+  Debug.Print iArr.ToString                      ' {1,2,3,"a","b","c",4,5,6,"d","e","f"}
   
   ' ##### DROP LEFT/RIGHT TEST
   Debug.Print vbCrLf & " #### Drop left/right test"
-  Dim arrDrops As New iArray
-  arrDrops.PushArray Array("1", "Two", "3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
-  Debug.Print arrDrops.DropLeft(2).ToString      ' {"1", "Two"}
-  Debug.Print arrDrops.ToString                  ' {"3",4,1,2,3,4,5,"a","b","c",True}
-  Debug.Print arrDrops.DropRight(3).ToString     ' {"b","c",True}
-  Debug.Print arrDrops.ToString                  ' {"3",4,1,2,3,4,5,"a"}
+  Set iArr = New iArray
+  iArr.PushArray Array("1", "Two", "3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+  Debug.Print iArr.DropLeft(2).ToString          ' {"1", "Two"}
+  Debug.Print iArr.ToString                      ' {"3",4,1,2,3,4,5,"a","b","c",True}
+  Debug.Print iArr.DropRight(3).ToString         ' {"b","c",True}
+  Debug.Print iArr.ToString                      ' {"3",4,1,2,3,4,5,"a"}
   
   ' ##### REMOVE DUPLICATES TEST
   Debug.Print vbCrLf & " #### Remove duplicates test"
-  Dim arrDupl As New iArray
-  arrDupl.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
-  Debug.Print arrDupl.RemoveDuplicates           ' 3
-  Debug.Print arrDupl.ToString                   ' {1,2,"a",3,3.14,"b",True,4}
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
+  Debug.Print iArr.RemoveDuplicates              ' 3
+  Debug.Print iArr.ToString                      ' {1,2,"a",3,3.14,"b",True,4}
   
   ' ##### CLONE ARRAY TEST
   Debug.Print vbCrLf & " #### Clone array test"
-  Dim arrToClone As New iArray
-  arrToClone.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
   Dim arrCloned As New iArray
-  Set arrCloned = arrToClone.Clone
-  arrToClone.Clear
+  Set arrCloned = iArr.Clone
+  iArr.Clear
   Debug.Print arrCloned.ToString                 ' {"3",4,1,2,3,4,5,"a","b","c",True}
   
   ' ##### SHUFFLE ARRAY TEST
   Debug.Print vbCrLf & " #### Shuffle array test"
-  Dim arrToShuffle As New iArray
-  arrToShuffle.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
   Dim arrShufl As New iArray
-  Set arrShufl = arrToShuffle.Shuffle
-  Debug.Print arrShufl.ToString                  ' {MIXED}
+  Set arrShufl = iArr.Shuffle
+  Debug.Print arrShufl.ToString                  ' e.g. {"a",4,4,2,3,1,5,"3",True,"b","c"}
   
   ' ##### REVERSE ARRAY TEST
   Debug.Print vbCrLf & " #### Reverse array test"
-  Dim arrToReverse As New iArray
-  arrToReverse.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
   Dim arrRev As New iArray
-  Set arrRev = arrToReverse.Reverse
+  Set arrRev = iArr.Reverse
   Debug.Print arrRev.ToString                    ' {True,"c","b","a",5,4,3,2,1,4,"3"}
-   
+  
+  ' ##### FIRST/LAST TEST
+  Debug.Print vbCrLf & " #### First/Last test"
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, 3, 4, 5)
+  Debug.Print iArr.First                         ' 1
+  Debug.Print iArr.Last                          ' 5
+  
+  ' ##### ADD AFTER/BEFORE TEST
+  Debug.Print vbCrLf & " #### Add after/before test"
+  Set iArr = New iArray
+  iArr.AddBefore 2, "Something"
+  iArr.PushArray Array(1, 2, 3, 4, 5)
+  Debug.Print iArr.ToString                      ' {"Something",1,2,3,4,5}
+  iArr.AddBefore 1, "New First"
+  Debug.Print iArr.ToString                      ' {"New First","Something",1,2,3,4,5}
+  iArr.AddAfter 4, "Hello"
+  Debug.Print iArr.ToString                      ' {"New First","Something",1,2,"Hello",3,4,5}
+  
+  ' ##### ADD AFTER/BEFORE ARRAY TEST
+  Debug.Print vbCrLf & " #### Add after/before array test"
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, 3, 4, 5)
+  iArr.AddArrayAfter 2, Array("a", "b", "c")
+  Debug.Print iArr.ToString                      ' {1,2,"a","b","c",3,4,5}
+  iArr.AddArrayBefore 7, Array(True, False)
+  Debug.Print iArr.ToString                      ' {1,2,"a","b","c",3,True,False,4,5}
+  
 End Sub
 
