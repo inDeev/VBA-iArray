@@ -86,7 +86,7 @@ End Sub
 ' ####################
 
 'Clear
-' Clears currenct iArray
+' Empties iArray
 Public Function Clear() As Boolean
   For i = iArray.Count To 1 Step -1
     iArray.Remove i
@@ -95,7 +95,8 @@ Public Function Clear() As Boolean
 End Function
 
 'Clone
-'@return iArray | Return exact copy of itself
+' Makes a hard copy of the iArray
+' @return iArray | Return exact copy of itself
 Public Function Clone() As iArray
   Set Clone = New iArray
   For i = 1 To Me.Count
@@ -104,8 +105,9 @@ Public Function Clone() As iArray
 End Function
 
 'Contains
-'@param Variant val | One item (String, number, ...) to by checked if it exists in iArray
-'$return Boolean | True = exists, False = doesn't exists
+' Checks how many times is given value used inside iArray.
+' @param Variant val | One item (String, number, ...) to by checked if it exists in iArray
+' $return Boolean | True = exists, False = doesn't exists
 Public Function Contains(ByVal val As Variant) As Boolean
   Contains = False
   Dim el As Variant
@@ -115,7 +117,7 @@ Public Function Contains(ByVal val As Variant) As Boolean
 End Function
 
 'CountOccurences
-' Chech how many times is given value used inside iArray
+' Checks how many times is given value used inside iArray.
 ' @param Variant val | One item (String, number, ...) to by checked
 ' @return Long | Count of matched occurences
 Public Function CountOccurences(val As Variant) As Long
@@ -127,17 +129,17 @@ Public Function CountOccurences(val As Variant) As Long
 End Function
 
 'Dequeue
-' Removes an item from the beginning of the iArray
-' @return Variant | First iArray item or Null if iArray is empty
+' Removes an item from the begining of the iArray.
+' @return Variant | Removed item or Null, if iArray is empty
 Public Function Dequeue() As Variant
   Dequeue = Shift()
 End Function
 
 'Difference
-'check for number of differences between two arrays, what was added or what was deleted in new array
-'@param iArray oldArray | Old iArray to be compared with current iArray
-'@param String retType | d = deleted from old iArray, a = added in current iArray, c = combination of both
-'@return iArray | iArray with differences found
+' Checks for number of differences between two arrays, what was added/deleted or combination.
+' @param iArray oldArray | Old iArray to be compared with current iArray
+' @param String retType | “d” = deleted from old iArray, “a” = added in current iArray, “c” = combination of both (default)
+' @return iArray | iArray with differences found
 Public Function Difference(ByRef oldArray As iArray, Optional ByVal retType As String = "c") As iArray
   Set Difference = New iArray
   Select Case LCase(retType)
@@ -163,8 +165,9 @@ Public Function Difference(ByRef oldArray As iArray, Optional ByVal retType As S
 End Function
 
 'DropLeft
-'@param Long n | Number of items to be removed from the start of the iArray
-'@return iArray | Array of the removed items
+' Remove n items from the beginning of the iArray. If n > count of iArray items, all items are removed.
+' @param Long n | Number of items to be removed
+' @return iArray | Array of the removed items
 Public Function DropLeft(ByRef n As Long) As iArray
   Set DropLeft = New iArray
   If n > Me.Count Then n = Me.Count
@@ -177,8 +180,9 @@ Public Function DropLeft(ByRef n As Long) As iArray
 End Function
 
 'DropRight
-'@param Long n | Number of items to be removed from the end of the iArray
-'@return iArray | Array of the removed items
+' Remove n items from the end of the iArray. If n > count of iArray items, all items are removed.
+' @param Long n | Number of items to be removed
+' @return iArray | Array of the removed items
 Public Function DropRight(ByRef n As Long) As iArray
   Set DropRight = New iArray
   If n > Me.Count Then n = Me.Count
@@ -191,7 +195,7 @@ Public Function DropRight(ByRef n As Long) As iArray
 End Function
 
 'Enqueue
-' Add an item at the end of the iArray
+' Adds an item at the end of the iArray.
 ' @param Variant val | One item (String, number, ...) to add into iArray
 ' @return Long | Count of items inside iArray
 Public Function Enqueue(ByVal val As Variant) As Long
@@ -199,16 +203,17 @@ Public Function Enqueue(ByVal val As Variant) As Long
 End Function
 
 'EnqueueArray
-' Add items at the end of the iArray
-' @param Variant val | Array() to add into iArray
+' Adds items at the end of the iArray
+' @param Variant val | Array() of items to add into iArray
 ' @return Long | Count of items inside array
 Public Function EnqueueArray(ByVal val As Variant) As Long
   EnqueueArray = PushArray(val)
 End Function
 
 'Join
-'@param iArray jArray | iArray to be joined with current iArray
-'@return iArray | Joined iArrays
+' Joins two iArrays.
+' @param iArray jArray | iArray to be joined with current iArray
+' @return iArray | Joined iArray
 Public Function Join(ByRef joinArr As iArray) As iArray
   Set Join = New iArray
   Join.PushArray Me
@@ -216,8 +221,8 @@ Public Function Join(ByRef joinArr As iArray) As iArray
 End Function
 
 'Pop
-' Removes an item from the end of the iArray
-' @return Variant | Last item of the iArray or Null if iArray is empty
+' Removes an item from the end of the iArray.
+' @return Variant | Removed item or Null, if iArray is empty
 Public Function Pop() As Variant
   Pop = Null
   If iArray.Count > 0 Then
@@ -227,7 +232,7 @@ Public Function Pop() As Variant
 End Function
 
 'Push
-' Add an item at the end of the iArray
+' Adds an item at the end of the iArray.
 ' @param Variant val | One item (String, number, ...) to add into iArray
 ' @return Long | Count of items inside iArray
 Public Function Push(ByVal val As Variant) As Long
@@ -236,8 +241,8 @@ Public Function Push(ByVal val As Variant) As Long
 End Function
 
 'PushArray
-' Add items at the end of the iArray
-' @param Variant val | Array() to add into iArray
+' Adds items at the end of the iArray.
+' @param Variant val | Array() of items to add into iArray
 ' @return Long | Count of items inside array
 Public Function PushArray(ByVal val As Variant) As Long
   If TypeOf val Is iArray Then
@@ -253,8 +258,8 @@ Public Function PushArray(ByVal val As Variant) As Long
 End Function
 
 'RemoveDuplicates
-' Keeps each item only ones
-' @return Long | Count of the removed duplicates
+' Keeps only first occurences of the values
+' @return Long | Count of the removed items
 Public Function RemoveDuplicates() As Long
   RemoveDuplicates = 0
   For i = Me.Count To 1 Step -1
@@ -276,8 +281,8 @@ Public Function Reverse() As iArray
 End Function
 
 'Shift
-' Removes an item from the beginning of the iArray
-' @return Variant | First iArray item or Null if iArray is empty
+' Removes an item from the begining of the iArray.
+' @return Variant | Removed item or Null, if iArray is empty
 Public Function Shift() As Variant
   Shift = Null
   If iArray.Count > 0 Then
@@ -305,9 +310,9 @@ Public Function Shuffle() As iArray
 End Function
 
 'ToString
-' Creates string representation of the iArray
-' @param String delimiter | Optional character to separate the iArray's items
-' @return String | formated representation of tha iArray
+' Creates string representation of the iArray.
+' @param String delimiter | Optional character to separate the iArray's items (default = ",")
+' @return String | Formated representation of tha iArray
 Public Function ToString(Optional ByVal delimiter As String = ",") As String
   If iArray.Count = 0 Then ToString = "{}": Exit Function
   ToString = vbNullString
@@ -322,7 +327,7 @@ Public Function ToString(Optional ByVal delimiter As String = ",") As String
 End Function
 
 'Unshift
-' Add an item at the begining of the iArray
+' Add an item at the begining of the iArray.
 ' @param Variant val | One item (String, number, ...) to add into iArray
 ' @return Long | Count of items inside iArray
 Public Function Unshift(ByVal val As Variant) As Long
@@ -336,8 +341,8 @@ Public Function Unshift(ByVal val As Variant) As Long
 End Function
 
 'UnshiftArray
-' Add items at the begining of the iArray
-' @param Variant val | Array() to add into iArray
+' Add items at the begining of the iArray.
+' @param Variant val | Array() of items to add into iArray
 ' @return Long | Count of items inside iArray
 Public Function UnshiftArray(ByVal val As Variant) As Long
   For i = UBound(val) To LBound(val) Step -1
