@@ -30,7 +30,7 @@ Option Explicit
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 '
-' Version of iArray: 0.2
+' Version of iArray: 0.3
 
 Private iArray As Collection
 Private i As Long ' Counter
@@ -207,7 +207,7 @@ Public Function Clone() As iArray
 End Function
 
 'Contains
-' Checks how many times is given value used inside iArray.
+' Checks if given value is used inside iArray.
 ' @param Variant val | One item (String, number, ...) to by checked if it exists in iArray
 ' $return Boolean | True = exists, False = doesn't exists
 Public Function Contains(ByVal val As Variant) As Boolean
@@ -216,6 +216,34 @@ Public Function Contains(ByVal val As Variant) As Boolean
   For Each el In iArray
     If el = val Then Contains = True: Exit Function
   Next el
+End Function
+
+'ContainsAll
+' Checks if all given values are used inside iArray.
+' @param Array/iArray val | array of values to by checked if it exists in iArray
+' $return Boolean | True = all exists, False = one ore more values doesn't exists
+Public Function ContainsAll(ByVal val As Variant) As Boolean
+  Dim iValues As New iArray
+  If Not TypeOf val Is iArray And IsArray(val) Then
+    iValues.PushArray (val)
+  ElseIf TypeOf val Is iArray Then
+    Set iValues = val
+  End If
+  ContainsAll = False
+  Dim totalValues As Integer: totalValues = iValues.Count
+  Dim foundValues As Integer: foundValues = 0
+  Dim iValue As Variant
+  Dim el As Variant
+  Do While iValues.Count > 0
+    iValue = iValues.Dequeue
+    For Each el In iArray
+      If el = iValue Then
+        foundValues = foundValues + 1
+        If foundValues = totalValues Then ContainsAll = True: Exit Function
+        Exit For
+      End If
+    Next el
+  Loop
 End Function
 
 'CountOccurences
@@ -423,14 +451,13 @@ Public Function Shuffle() As iArray
     Shuffle.Push Me(keys(rndNo))
     keys.Remove (rndNo)
   Loop
-
 End Function
 
 'ToString
 ' Creates string representation of the iArray.
-' @param String delimiter | Optional character to separate the iArray's items (default = ",")
+' @param String delimiter | Optional character to separate the iArray's items (default = ";")
 ' @return String | Formated representation of tha iArray
-Public Function ToString(Optional ByVal delimiter As String = ",") As String
+Public Function ToString(Optional ByVal delimiter As String = ";") As String
   If Me.Count = 0 Then ToString = "{}": Exit Function
   ToString = vbNullString
   For i = 1 To Me.Count
