@@ -82,7 +82,7 @@ iArr.Clear
 Debug.Print iArrCloned.ToString ' {"3";4;1;2;3;4;5;"a";"b";"c";True}
 ```
 ### .Contains
-Checks if given value is used inside iArray. 
+Checks if given value is used inside iArray.  
 **@param Variant val** One item (String, number, ...) to by checked if exists in iArray  
 **@return Boolean** True = item exists, False = item doesn't exists in iArray
 ```vba
@@ -91,13 +91,13 @@ Debug.Print iArr.Contains(1) ' True
 Debug.Print iArr.Contains(5) ' False
 ```
 ### .ContainsAll
-Checks if all given values are used inside iArray.
+Checks if all given values are used inside iArray.  
 **@param Array|iArray val** Array of values to by checked if it exists in iArray  
 **@return Boolean** True = all exists, False = one ore more values doesn't exists
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
-Debug.Print iArr.Contains(Array(1,2)) ' True
-Debug.Print iArr.Contains(Array(1,2,5)) ' False
+Debug.Print iArr.Contains(Array(1, 2)) ' True
+Debug.Print iArr.Contains(Array(1, 2, 5)) ' False
 ```
 ### .CountOccurences
 Checks how many times is given value used inside iArray.  
