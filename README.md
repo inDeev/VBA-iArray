@@ -12,7 +12,7 @@ dim iArr as new iArray
 iArr.PushArray ("a","b","c","d","e","f")
 Debug.Print iArr(2) ' "b"
 iArr(4) = "Fourth"
-Debug.Print iArr.ToString ' {"a","b","c","Fourth","e","f"}
+Debug.Print iArr.ToString ' {"a";"b";"c";"Fourth";"e";"f"}
 ```
 ### .AddAfter
 Adds item after given index.  
@@ -24,7 +24,7 @@ When index < count of items, unshifts value at the begining
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfter 4, "Hello"
-Debug.Print iArr.ToString ' {1,2,3,4,"Hello",5}
+Debug.Print iArr.ToString ' {1;2;3;4;"Hello";5}
 ```
 ### AddArrayAfter
 Adds items after given index.  
@@ -36,7 +36,7 @@ When index < count of items, unshifts values at the begining
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfterArray 4, Array(True, False)
-Debug.Print iArr.ToString ' {1,2,3,4,True,False,5}
+Debug.Print iArr.ToString ' {1;2;3;4;True;False;5}
 ```
 ### AddArrayBefore
 Adds items before given index.  
@@ -48,7 +48,7 @@ When index <= count of items, unshifts values at the begining
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddArrayBefore 4, Array(True, False)
-Debug.Print iArr.ToString ' {1,2,3,True,False,4,5}
+Debug.Print iArr.ToString ' {1;2;3;True;False;4;5}
 ```
 ### .AddBefore
 Adds item before given index.  
@@ -60,13 +60,13 @@ When index <= count of items, unshifts value at the begining
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddBefore 4, "Hello"
-Debug.Print iArr.ToString ' {1,2,3,"Hello",4,5}
+Debug.Print iArr.ToString ' {1;2;3;"Hello";4;5}
 ```
 ### .Clear
 Empties iArray.
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
-Debug.Print iArr.ToString ' {1,2,3,4,5}
+Debug.Print iArr.ToString ' {1;2;3;4;5}
 iArr.Clear
 Debug.Print iArr.ToString ' {}
 ```
@@ -79,7 +79,7 @@ iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
 Dim iArrCloned As New iArray
 Set iArrCloned = arrToClone.Clone
 iArr.Clear
-Debug.Print iArrCloned.ToString ' {"3",4,1,2,3,4,5,"a","b","c",True}
+Debug.Print iArrCloned.ToString ' {"3";4;1;2;3;4;5;"a";"b";"c";True}
 ```
 ### .Contains
 Checks if given value is used inside iArray. 
@@ -115,7 +115,7 @@ Removes an item from the begining of the iArray.
 dim iArr as new iArray
 iArr.PushArray Array("First item","Second item","Queued","Next queued")
 Debug.Print iArr.Dequeue  ' "First item"
-Debug.Print iArr.ToString ' {"Second item","Queued","Next queued"}
+Debug.Print iArr.ToString ' {"Second item";"Queued";"Next queued"}
 ```
 ### .Difference
 Checks for number of differences between two arrays, what was added/deleted or combination.  
@@ -127,7 +127,7 @@ Dim iArr1 As New iArray: iArr1.PushArray Array(1, 2, 3)
 Dim iArr2 As New iArray: iArr2.PushArray Array(2, 3, 4)
 Dim iArr3 As New iArray
 Set iArr3 = iArr2.Difference(iArr1) ' = iArr2.Difference(iArr1, "c")
-Debug.Print iArr3.ToString ' {1,4}
+Debug.Print iArr3.ToString ' {1;4}
 Set iArr3 = iArr2.Difference(iArr1, "d")
 Debug.Print iArr3.ToString ' {1}
 Set iArr3 = iArr2.Difference(iArr1, "a")
@@ -139,8 +139,8 @@ Remove n items from the beginning of the iArray. If n > count of iArray items, a
 **@return iArray** iArray of the removed items
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
-Debug.Print iArr.DropLeft(2).ToString ' {1, 2}
-Debug.Print iArr.ToString ' {3,"a","b","c"}
+Debug.Print iArr.DropLeft(2).ToString ' {1;2}
+Debug.Print iArr.ToString ' {3;"a";"b";"c"}
 ```
 ### .DropRight
 Remove n items from the end of the iArray. If n > count of iArray items, all items are removed.  
@@ -148,8 +148,8 @@ Remove n items from the end of the iArray. If n > count of iArray items, all ite
 **@return iArray** iArray of the removed items
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
-Debug.Print iArr.DropRight(2).ToString ' {"b","c"}
-Debug.Print iArr.ToString ' {1,2,3,"a"}
+Debug.Print iArr.DropRight(2).ToString ' {"b";"c"}
+Debug.Print iArr.ToString ' {1;2;3;"a"}
 ```
 ### .Enqueue
 Adds an item at the end of the iArray *(internally calls Push)*.  
@@ -159,7 +159,7 @@ Adds an item at the end of the iArray *(internally calls Push)*.
 dim iArr as new iArray
 iArr.PushArray Array("First item", "Second item")
 iArr.Enqueue "Queued"
-Debug.Print iArr.ToString ' {First item","Second item", "Queued"}
+Debug.Print iArr.ToString ' {First item";"Second item";"Queued"}
 ```
 ### .EnqueueArray
 Adds items at the end of the iArray *(internally calls PushArray)*.  
@@ -169,7 +169,7 @@ Adds items at the end of the iArray *(internally calls PushArray)*.
 dim iArr as new iArray
 iArr.PushArray Array("First item", "Second item")
 iArr.EnqueueArray Array("Queued","Next queued")
-Debug.Print iArr.ToString ' {"First item","Second item","Queued","Next queued"}
+Debug.Print iArr.ToString ' {"First item";"Second item";"Queued";"Next queued"}
 ```
 ### .First
 Returns value of the first element of the iArray.  
@@ -188,7 +188,7 @@ Dim iArr1 As New iArray: iArr1.PushArray Array(1, 2, 3, "a", "b", "c")
 Dim iArr2 As New iArray: iArr2.PushArray Array(4, 5, 6, "d", "e", "f")
 Dim iArrJoined As iArray
 Set iArrJoined = iArr1.Join(iArr2)
-Debug.Print arrJoined.ToString ' {1,2,3,"a","b","c",4,5,6,"d","e","f"}
+Debug.Print arrJoined.ToString ' {1;2;3;"a";"b";"c";4;5;6;"d";"e";"f"}
 ```
 ### .Last
 Returns value of the last element of the iArray.  
@@ -223,7 +223,7 @@ Adds items at the end of the iArray.
 ```vba
 dim iArr as new iArray
 iArr.PushArray Array("First item", "Second item")
-Debug.Print iArr.ToString ' {"First item","Second item"}
+Debug.Print iArr.ToString ' {"First item";"Second item"}
 ```
 ### .RemoveDuplicates
 Keeps only first occurences of the values.  
@@ -232,7 +232,7 @@ Keeps only first occurences of the values.
 Dim iArr As New iArray
 iArr.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
 Debug.Print iArr.RemoveDuplicates ' 3
-Debug.Print iArr.ToString ' {1,2,"a",3,3.14,"b",True,4}
+Debug.Print iArr.ToString ' {1;2;"a";3;3.14;"b";True;4}
 ```
 ### .Reverse
 Reverses the content of the iArray.  
@@ -242,7 +242,7 @@ Dim iArr As New iArray
 iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
 Dim iArrRev As New iArray
 Set iArrRev = iArr.Reverse
-Debug.Print iArrRev.ToString ' {True,"c","b","a",5,4,3,2,1,4,"3"}
+Debug.Print iArrRev.ToString ' {True;"c";"b";"a";5;4;3;2;1;4;"3"}
 ```
 ### .Shift
 Removes an item from the begining of the iArray.  
@@ -261,16 +261,16 @@ Dim iArr As New iArray
 iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
 Dim iArrShufled As New iArray
 Set iArrShufled = iArr.Shuffle
-Debug.Print iArrShufled.ToString ' e.g. {"3","c",4,"a",5,3,"b",1,4,2,True}
+Debug.Print iArrShufled.ToString ' e.g. {"3";"c";4;"a";5;3;"b";1;4;2;True}
 ```
 ### .ToString
 Creates string representation of the iArray.  
-**@param Optional String delimiter** Optional character to separate the iArray's items (default = ",")  
+**@param Optional String delimiter** Optional character to separate the iArray's items (default = ";")  
 **@return String** Formated representation of tha iArray
 ```vba
 Dim iArr As New iArray
-iArr.PushArray Array("a",123456, Empty,"...", True)
-Debug.Print iArr.ToString ' {"a",123456,,"...",True}
+iArr.PushArray Array("a", 123456, Empty, "...", True)
+Debug.Print iArr.ToString ' {"a";123456;;"...";True}
 ```
 ### .Unshift
 Adds an item at the begining of the iArray.  
@@ -280,7 +280,7 @@ Adds an item at the begining of the iArray.
 dim iArr as new iArray
 iArr.PushArray Array("First item", "Second item")
 iArr.Unshift "1st"
-Debug.Print iArr.ToString ' {"1st","First item","Second item"}
+Debug.Print iArr.ToString ' {"1st";"First item";"Second item"}
 ```
 ### .UnshiftArray
 Adds items at the begining of the iArray.  
@@ -290,7 +290,7 @@ Adds items at the begining of the iArray.
 dim iArr as new iArray
 iArr.PushArray Array("First item", "Second item")
 iArr.UnshiftArray Array("1st","2nd")
-Debug.Print iArr.ToString ' {"1st", "2nd", First item","Second item"}
+Debug.Print iArr.ToString ' {"1st";"2nd";"First item";"Second item"}
 ```
 ## To be done
 - **.OccurenceIndexes**
