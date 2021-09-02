@@ -179,7 +179,7 @@ Debug.Print iArr.DropRight(2).ToString ' {"b";"c"}
 Debug.Print iArr.ToString ' {1;2;3;"a"}
 ```
 ### Enqueue
-Adds an element at the end of the iArray *(alias for **.Push**)*.
+Adds an element at the end of the iArray *(alias for [**Push**](#Push))*.
 - **Affects original iArray**
 
 **@param Variant val** One element (String, number, ...) to add into iArray  
@@ -191,7 +191,7 @@ iArr.Enqueue "Queued"
 Debug.Print iArr.ToString ' {First element";"Second element";"Queued"}
 ```
 ### EnqueueArray
-Adds elements at the end of the iArray *(alias for **.PushArray**)*.
+Adds elements at the end of the iArray *(alias for [**PushArray**](#PushArray))*.
 - **Affects original iArray**
 
 **@param Variant val** Array() or iArray of elements to add into iArray  
