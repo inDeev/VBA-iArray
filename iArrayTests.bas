@@ -32,10 +32,10 @@ Public Sub iArrayTest()
   ' ##### ENQUEUE / DEQUEUE TEST
   Debug.Print vbCrLf & " #### Enqueue/Dequeue test"
   Set iArr = New iArray
-  iArr.Enqueue ("Queued Item")
-  Call validate("Enqueue", "{""Queued Item""}", iArr.ToString)
+  iArr.Enqueue ("Queued element")
+  Call validate("Enqueue", "{""Queued element""}", iArr.ToString)
   iArr.EnqueueArray Array(1, "2", 3.14, False, "Last")
-  Call validate("EnqueueArray", Array("{""Queued Item"";1;""2"";3.14;False;""Last""}", "{""Queued Item"";1;""2"";3,14;False;""Last""}"), iArr.ToString)
+  Call validate("EnqueueArray", Array("{""Queued element"";1;""2"";3.14;False;""Last""}", "{""Queued element"";1;""2"";3,14;False;""Last""}"), iArr.ToString)
   iArr.Dequeue
   Call validate("Dequeue", 1, iArr.Dequeue)
 
@@ -54,12 +54,12 @@ Public Sub iArrayTest()
   iArr.Clear
   Call validate("Clear", "{}", iArr.ToString)
 
-  ' ##### COUNT OCCURENCES TEST
-  Debug.Print vbCrLf & " #### Count occurences test"
+  ' ##### COUNT OCCURRENCES TEST
+  Debug.Print vbCrLf & " #### Count occurrences test"
   Set iArr = New iArray
   iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
-  Call validate("Count occurences (yes)", 3, iArr.CountOccurences(2))
-  Call validate("Count occurences (not)", 0, iArr.CountOccurences(4))
+  Call validate("Count occurrences (yes)", 3, iArr.CountOccurrences(2))
+  Call validate("Count occurrences (not)", 0, iArr.CountOccurrences(4))
 
   ' ##### CONTAINS TEST
   Debug.Print vbCrLf & " #### Contains test"
@@ -106,12 +106,15 @@ Public Sub iArrayTest()
   Call validate("DropRight return", "{""b"";""c"";True}", iArr.DropRight(3).ToString)
   Call validate("DropRight", "{""3"";4;1;2;3;4;5;""a""}", iArr.ToString)
 
-  ' ##### REMOVE DUPLICATES TEST
-  Debug.Print vbCrLf & " #### Remove duplicates test"
+  ' ##### UNIQUE / REMOVE DUPLICATES TEST
+  Debug.Print vbCrLf & " #### Unique / Remove duplicates test"
   Set iArr = New iArray
-  iArr.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
+  iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "3", "c", "a", True)
+  Dim uniqueArr As New iArray
+  Set uniqueArr = iArr.Unique
+  Call validate("Unique", "{""3"";4;1;2;3;5;""a"";""b"";""c"";True}", uniqueArr.ToString)
   Call validate("RemoveDuplicates (removed count)", 3, iArr.RemoveDuplicates)
-  Call validate("RemoveDuplicates", Array("{1;2;""a"";3;3.14;""b"";True;4}", "{1;2;""a"";3;3,14;""b"";True;4}"), iArr.ToString)
+  Call validate("RemoveDuplicates", "{""3"";4;1;2;3;5;""a"";""b"";""c"";True}", iArr.ToString)
 
   ' ##### CLONE ARRAY TEST
   Debug.Print vbCrLf & " #### Clone array test"
@@ -163,6 +166,17 @@ Public Sub iArrayTest()
   Call validate("AddArrayBefore", "{1;2;""a"";""b"";""c"";3;4;5}", iArr.ToString)
   iArr.AddArrayBefore 7, Array(True, False)
   Call validate("AddArrayBefore", "{1;2;""a"";""b"";""c"";3;True;False;4;5}", iArr.ToString)
+  
+  ' ##### TAIL/HEAD TEST
+  Debug.Print vbCrLf & " #### Tail / Head test"
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+  Dim tailArr As New iArray
+  Set tailArr = iArr.Tail
+  Call validate("Tail", "{4;1;2;3;4;5;""a"";""b"";""c"";True}", tailArr.ToString)
+  Dim headArr As New iArray
+  Set headArr = tailArr.Head
+  Call validate("Head", "{4;1;2;3;4;5;""a"";""b"";""c""}", headArr.ToString)
 End Sub
 
 Private Sub validate(name As String, expected, actual As String)

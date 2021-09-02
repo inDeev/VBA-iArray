@@ -1,3 +1,4 @@
+
 # VBA-iArray
 VBA arrays for 21st century, based on Collections
 
@@ -6,7 +7,7 @@ VBA arrays for 21st century, based on Collections
 ## Methods
 
 ### (Default Members)
-All items inside iArray are indexed (from 1 to count of items) and are available directly by its index number
+All elements inside iArray are indexed (from 1 to count of elements) and are available directly by its index number
 ```vba
 dim iArr as new iArray
 iArr.PushArray ("a","b","c","d","e","f")
@@ -15,55 +16,64 @@ iArr(4) = "Fourth"
 Debug.Print iArr.ToString ' {"a";"b";"c";"Fourth";"e";"f"}
 ```
 ### .AddAfter
-Adds item after given index.  
-When index >= count of items, pushes value at the end.  
-When index < count of items, unshifts value at the begining  
-**@param Long index** Index after which will be added an item  
-**@param Variant val** One item (String, number, ...) to add into iArray  
-**@return Long** Count of items inside iArray
+Adds element after the given index.  
+- **Affects original iArray**
+ - When index >= count of elements, inserts value at the end.
+ - When index < count of elements, inserts value at the beginning
+
+**@param Long index** Index after which will be added an element  
+**@param Variant val** One element (String, number, ...) to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfter 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;4;"Hello";5}
 ```
-### AddArrayAfter
-Adds items after given index.  
-When index >= count of items, pushes values at the end.  
-When index < count of items, unshifts values at the begining  
-**@param Long index** Index after which will be added items  
-**@param Variant val** Array() or iArray of items to add into iArray  
-**@return Long** Count of items inside iArray
+###AddArrayAfter  
+Adds elements after the given index.  
+- **Affects original iArray**
+- When index >= count of elements, inserts values at the end.  
+- When index < count of elements, inserts values at the beginning  
+
+**@param Long index** Index after which will be added elements  
+**@param Variant val** Array() or iArray of elements to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfterArray 4, Array(True, False)
 Debug.Print iArr.ToString ' {1;2;3;4;True;False;5}
 ```
 ### AddArrayBefore
-Adds items before given index.  
-When index > count of items, pushes values at the end.  
-When index <= count of items, unshifts values at the begining  
-**@param Long index** Index before which will be added items  
-**@param Variant val** Array() or iArray of items to add into iArray  
-**@return Long** Count of items inside iArray
+Adds elements before the given index.  
+- **Affects original iArray**
+- When index > count of elements, inserts values at the end.  
+- When index <= count of elements, inserts values at the beginning  
+
+**@param Long index** Index before which will be added elements  
+**@param Variant val** Array() or iArray of elements to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddArrayBefore 4, Array(True, False)
 Debug.Print iArr.ToString ' {1;2;3;True;False;4;5}
 ```
 ### .AddBefore
-Adds item before given index.  
-When index > count of items, pushes value at the end.  
-When index <= count of items, unshifts value at the begining  
-**@param Long index** Index before which will be added an item  
-**@param Variant val** One item (String, number, ...) to add into iArray  
-**@return Long** Count of items inside iArray
+Adds element before the given index.  
+- **Affects original iArray**
+- When index > count of elements, inserts value at the end.  
+- When index <= count of elements, inserts value at the beginning  
+
+**@param Long index** Index before which will be added an element  
+**@param Variant val** One element (String, number, ...) to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddBefore 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;"Hello";4;5}
 ```
 ### .Clear
-Empties iArray.
+Empties iArray. Affects original iArray.
+- **Affects original iArray**
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.ToString ' {1;2;3;4;5}
@@ -71,7 +81,9 @@ iArr.Clear
 Debug.Print iArr.ToString ' {}
 ```
 ### .Clone
-Makes a hard copy of the iArray.  
+Makes a hard copy of the iArray. 
+- **~~Affects original iArray~~**
+
 **@return iArray** Return exact copy of itself
 ```vba
 Dim iArr As New iArray
@@ -83,42 +95,52 @@ Debug.Print iArrCloned.ToString ' {"3";4;1;2;3;4;5;"a";"b";"c";True}
 ```
 ### .Contains
 Checks if given value is used inside iArray.  
-**@param Variant val** One item (String, number, ...) to by checked if exists in iArray  
-**@return Boolean** True = item exists, False = item doesn't exists in iArray
+- **~~Affects original iArray~~**
+
+**@param Variant val** An element (String, number, ...) to be checked for existence in iArray  
+**@return Boolean** True = element exists, False = element doesn't exist in iArray
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(1) ' True
 Debug.Print iArr.Contains(5) ' False
 ```
-### .ContainsAll
-Checks if all given values are used inside iArray.  
+### .ContainsAll  *(new in v0.3)*
+Checks if all given values are used inside iArray.
+- **~~Affects original iArray~~**
+
 **@param Array|iArray val** Array of values to by checked if it exists in iArray  
-**@return Boolean** True = all exists, False = one ore more values doesn't exists
+**@return Boolean** True = all exists, False = one or more values doesn't exist
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(Array(1, 2)) ' True
 Debug.Print iArr.Contains(Array(1, 2, 5)) ' False
 ```
-### .CountOccurences
-Checks how many times is given value used inside iArray.  
-**@param Variant val** One item (String, number, ...) to by checked  
-**@return Long** Count of matched occurences
+### .CountOccurrences
+Checks how many times is given value used inside iArray.
+- **~~Affects original iArray~~**
+
+**@param Variant val** One element (String, number, ...) to be checked for occurrence in iArray
+**@return Long** Count of matched occurrences
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
-Debug.Print iArr.CountOccurences(2) ' 3
-Debug.Print iArr.CountOccurences(4) ' 0
+Debug.Print iArr.CountOccurrences(2) ' 3
+Debug.Print iArr.CountOccurrences(4) ' 0
 ```
 ### .Dequeue
-Removes an item from the begining of the iArray.  
-**@return Variant** Removed item or Empty, if iArray is empty
+Removes an element from the beginning of the iArray.  
+- **Affects original iArray**
+
+**@return Variant** Removed element or Empty, if iArray is empty
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item","Second item","Queued","Next queued")
-Debug.Print iArr.Dequeue  ' "First item"
-Debug.Print iArr.ToString ' {"Second item";"Queued";"Next queued"}
+iArr.PushArray Array("First element","Second element","Queued","Next queued")
+Debug.Print iArr.Dequeue  ' "First element"
+Debug.Print iArr.ToString ' {"Second element";"Queued";"Next queued"}
 ```
 ### .Difference
-Checks for number of differences between two arrays, what was added/deleted or combination.  
+Checks for number of differences between two arrays, what was added/deleted or combination.
+- **~~Affects original iArray~~**
+
 **@param iArray oldArray** Old iArray to be compared with current iArray  
 **@param Optional String retType** "d" = deleted from old iArray, "a" = added in current iArray, "c" = combination of both (default)  
 **@return iArray** iArray with differences found
@@ -134,53 +156,78 @@ Set iArr3 = iArr2.Difference(iArr1, "a")
 Debug.Print iArr3.ToString ' {4}
 ```
 ### .DropLeft
-Remove n items from the beginning of the iArray. If n > count of iArray items, all items are removed.  
-**@param Long n** Number of items to be removed  
-**@return iArray** iArray of the removed items
+Remove n elements from the beginning of the iArray. If n > count of iArray elements, all elements are removed.
+- **Affects original iArray**
+
+**@param Long n** Number of elements to be removed  
+**@return iArray** iArray of the removed elements
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
 Debug.Print iArr.DropLeft(2).ToString ' {1;2}
 Debug.Print iArr.ToString ' {3;"a";"b";"c"}
 ```
 ### .DropRight
-Remove n items from the end of the iArray. If n > count of iArray items, all items are removed.  
-**@param Long n** Number of items to be removed  
-**@return iArray** iArray of the removed items
+Remove n elements from the end of the iArray. If n > count of iArray elements, all elements are removed.
+- **Affects original iArray**
+
+**@param Long n** Number of elements to be removed  
+**@return iArray** iArray of the removed elements
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
 Debug.Print iArr.DropRight(2).ToString ' {"b";"c"}
 Debug.Print iArr.ToString ' {1;2;3;"a"}
 ```
 ### .Enqueue
-Adds an item at the end of the iArray *(internally calls Push)*.  
-**@param Variant val** One item (String, number, ...) to add into iArray  
-**@return Long** Count of items inside iArray
+Adds an element at the end of the iArray *(alias for **.Push**)*.
+- **Affects original iArray**
+
+**@param Variant val** One element (String, number, ...) to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
+iArr.PushArray Array("First element", "Second element")
 iArr.Enqueue "Queued"
-Debug.Print iArr.ToString ' {First item";"Second item";"Queued"}
+Debug.Print iArr.ToString ' {First element";"Second element";"Queued"}
 ```
 ### .EnqueueArray
-Adds items at the end of the iArray *(internally calls PushArray)*.  
-**@param Variant val** Array() or iArray of items to add into iArray  
-**@return Long** Count of items inside iArray
+Adds elements at the end of the iArray *(alias for **.PushArray**)*.
+- **Affects original iArray**
+
+**@param Variant val** Array() or iArray of elements to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
+iArr.PushArray Array("First element", "Second element")
 iArr.EnqueueArray Array("Queued","Next queued")
-Debug.Print iArr.ToString ' {"First item";"Second item";"Queued";"Next queued"}
+Debug.Print iArr.ToString ' {"First element";"Second element";"Queued";"Next queued"}
 ```
 ### .First
 Returns value of the first element of the iArray.  
+- **~~Affects original iArray~~**
+
 **@return Variant** Value of the first element or Empty if iArray is Empty
 ```vba
 dim iArr as New iArray
 iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.First ' 1
 ```
+### .Head *(new in v0.4)*
+Returns all elements of iArray, except the last one.
+- **~~Affects original iArray~~**
+- If there is less than two elements inside original iArray, empty iArray is returned
+
+**@return iArray** Copy of original array, without the last element
+```vba
+Set iArr = New iArray
+iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+Dim tailArr As New iArray5
+Set tailArr = iArr.Tail
+Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
+```
 ### .Join
 Joins two iArrays.  
+- **~~Affects original iArrays~~**
+
 **@param iArray jArray** iArray to be joined with current iArray  
 **@return iArray**  Joined iArray
 ```vba
@@ -191,7 +238,9 @@ Set iArrJoined = iArr1.Join(iArr2)
 Debug.Print arrJoined.ToString ' {1;2;3;"a";"b";"c";4;5;6;"d";"e";"f"}
 ```
 ### .Last
-Returns value of the last element of the iArray.  
+Returns value of the last element of the iArray. 
+- **~~Affects original iArray~~**
+
 **@return Variant** Value of the last element or Empty if iArray is Empty
 ```vba
 dim iArr as New iArray
@@ -199,35 +248,44 @@ iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.Last ' 5
 ```
 ### .Pop
-Removes an item from the end of the iArray.  
-**@return Variant** Removed item or Empty, if iArray is empty
+Removes an element from the end of the iArray.  
+- **Affects original iArray**
+
+**@return Variant** Removed element or Empty, if iArray is empty
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
-Debug.Print iArr.Pop  ' "Second item"
-Debug.Print iArr.ToString ' {"First item"}
+iArr.PushArray Array("First element", "Second element")
+Debug.Print iArr.Pop  ' "Second element"
+Debug.Print iArr.ToString ' {"First element"}
 ```
 ### .Push
-Adds an item at the end of the iArray.  
-**@param Variant val** One item (String, number, ...) to add into iArray  
-**@return Long** Count of items inside iArray
+Adds an element at the end of the iArray.  
+- **Affects original iArray**
+
+**@param Variant val** One element (String, number, ...) to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.Push "First item"
-Debug.Print iArr.ToString ' {"First item"}
+iArr.Push "First element"
+Debug.Print iArr.ToString ' {"First element"}
 ```
 ### .PushArray
-Adds items at the end of the iArray.  
-**@param Variant val** Array() or iArray of items to add into iArray  
-**@return Long** Count of items inside iArray
+Adds elements at the end of the iArray.  
+- **Affects original iArray**
+
+**@param Variant val** Array() or iArray of elements to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
-Debug.Print iArr.ToString ' {"First item";"Second item"}
+iArr.PushArray Array("First element", "Second element")
+Debug.Print iArr.ToString ' {"First element";"Second element"}
 ```
 ### .RemoveDuplicates
-Keeps only first occurences of the values.  
-**@return Long** Count of the removed items
+Keeps only the first occurrence of the value.
+- **Affects original iArray**
+- The method without interfering with the original iArray is called **.Unique**
+
+**@return Long** Count of the removed elements
 ```vba
 Dim iArr As New iArray
 iArr.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
@@ -236,6 +294,8 @@ Debug.Print iArr.ToString ' {1;2;"a";3;3.14;"b";True;4}
 ```
 ### .Reverse
 Reverses the content of the iArray.  
+- **~~Affects original iArray~~**
+
 **@return iArray** Reversed iArray
 ```vba
 Dim iArr As New iArray
@@ -245,16 +305,20 @@ Set iArrRev = iArr.Reverse
 Debug.Print iArrRev.ToString ' {True;"c";"b";"a";5;4;3;2;1;4;"3"}
 ```
 ### .Shift
-Removes an item from the begining of the iArray.  
-**@return Variant** Removed item or Empty, if iArray is empty
+Removes an element from the beginning of the iArray.  
+- **Affects original iArray**
+
+**@return Variant** Removed element or Empty, if iArray is empty
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
-Debug.Print iArr.Shift  ' "First item"
-Debug.Print iArr.ToString ' {"Second item"}
+iArr.PushArray Array("First element", "Second element")
+Debug.Print iArr.Shift  ' "First element"
+Debug.Print iArr.ToString ' {"Second element"}
 ```
 ### .Shuffle
 Randomly mixes content of the iArray.  
+- **~~Affects original iArray~~**
+
 **@return iArray** Shuffled iArray
 ```vba
 Dim iArr As New iArray
@@ -263,55 +327,82 @@ Dim iArrShufled As New iArray
 Set iArrShufled = iArr.Shuffle
 Debug.Print iArrShufled.ToString ' e.g. {"3";"c";4;"a";5;3;"b";1;4;2;True}
 ```
+### .Tail *(new in v0.4)*
+Returns all elements of iArray, except the first one.
+- **~~Affects original iArray~~**
+- If there is less than two elements inside original iArray, empty iArray is returned
+
+**@return iArray** Copy of original array, without the first element
+```vba
+Set iArr = New iArray
+iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
+Dim tailArr As New iArray5
+Set tailArr = iArr.Tail
+Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
+```
 ### .ToString
 Creates string representation of the iArray.  
-**@param Optional String delimiter** Optional character to separate the iArray's items (default = ";")  
-**@return String** Formated representation of tha iArray
+- **~~Affects original iArray~~**
+
+**@param Optional String delimiter** Optional character to separate the iArray's elements (default = ";")  
+**@return String** Formatted representation of tha iArray
 ```vba
 Dim iArr As New iArray
 iArr.PushArray Array("a", 123456, Empty, "...", True)
 Debug.Print iArr.ToString ' {"a";123456;;"...";True}
 ```
+### .Unique *(new in v0.4)*
+Returns copy of iArray without duplicated values.
+- **~~Affects original iArray~~**
+
+**@return iArray** iArray with unique values
+```vba
+Dim iArr As New iArray
+iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "3", "c", "a", True)
+Dim uniqueArr As New iArray
+Set uniqueArr = iArr.Unique
+Debug.Print iArr.Unique.ToString ' {"3";4;1;2;3;5;"a";"b";"c";True}
+```
 ### .Unshift
-Adds an item at the begining of the iArray.  
-**@param Variant val** One item (String, number, ...) to add into iArray  
-**@return Long** Count of items inside iArray
+Adds an element at the beginning of the iArray.  
+- **Affects original iArray**
+
+**@param Variant val** One element (String, number, ...) to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
+iArr.PushArray Array("First element", "Second element")
 iArr.Unshift "1st"
-Debug.Print iArr.ToString ' {"1st";"First item";"Second item"}
+Debug.Print iArr.ToString ' {"1st";"First element";"Second element"}
 ```
 ### .UnshiftArray
-Adds items at the begining of the iArray.  
-**@param Variant val** Array() or iArray of items to add into iArray  
-**@return Long** Count of items inside iArray
+Adds elements at the beginning of the iArray. 
+- **Affects original iArray**
+
+**@param Variant val** Array() or iArray of elements to add into iArray  
+**@return Long** Count of elements inside iArray
 ```vba
 dim iArr as new iArray
-iArr.PushArray Array("First item", "Second item")
+iArr.PushArray Array("First element", "Second element")
 iArr.UnshiftArray Array("1st","2nd")
-Debug.Print iArr.ToString ' {"1st";"2nd";"First item";"Second item"}
+Debug.Print iArr.ToString ' {"1st";"2nd";"First element";"Second element"}
 ```
-## To be done
-- **.OccurenceIndexes**
-Returns all indexes of a value in iArray. If nothing found returns empty iArray
+## TBD
+- **.OccurrenceIndexes**
+  Returns all indexes of a value in iArray. If nothing found returns empty iArray
 - **.Intersect**
-Returns iArray which contains only elements which are same in two given iArrays
+  Returns iArray which contains only elements which are same in two given iArrays
 - **.Union**
-Returns iArray which contains only elements which are same in two given iArrays, without duplicates
-- **.Unique**
-Returns values of iArray, which are not used two or more times.
+  Returns iArray which contains only elements which are same in two given iArrays, without duplicates
 - **.IsNumericArray**
-Returns True if all values are numbers
+  Returns True if all values are numbers
 - **.Sum**
-Returns sum of items in iArray. Only for numeric iArray
+  Returns sum of elements in iArray. Only for numeric iArray
 - **.Average**
-Returns average value of items in iArray. Only for numeric iArray
-- **.Tail**
-Returns all elements of iArray, except first one. If there is only one element, it will be returned
+  Returns average value of elements in iArray. Only for numeric iArray
 
 ## Installation
-Just import **iArray.cls** into your project and you can directly use it
+Just import **iArray.cls** into your project, and you can directly use it
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

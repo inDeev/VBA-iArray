@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 Option Explicit
 'MIT License
 '
-'Copyright (c) 2019 Petr Katerinak
+'Copyright (c) 2019-2021 Petr Katerinak
 '
 'Permission is hereby granted, free of charge, to any person obtaining a copy
 'of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ Option Explicit
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 '
-' Version of iArray: 0.3
+' Version of iArray: 0.4
 
 Private iArray As Collection
 Private i As Long ' Counter
@@ -45,17 +45,17 @@ End Sub
 ' #####################
 ' #  Getter / Setter  #
 ' #####################
-'Attribute Item.VB_UserMemId = 0 saved in both procedures
+'Attribute Element.VB_UserMemId = 0 saved in both procedures
 
 '@DefaultMember
-Public Property Get Item(ByVal index As Long) As Variant
-Attribute Item.VB_UserMemId = 0
-  Item = iArray(index)
+Public Property Get Element(ByVal index As Long) As Variant
+Attribute Element.VB_UserMemId = 0
+  Element = iArray(index)
 End Property
 
 '@DefaultMember
-Public Property Let Item(ByVal index As Long, ByVal val As Variant)
-Attribute Item.VB_UserMemId = 0
+Public Property Let Element(ByVal index As Long, ByVal val As Variant)
+Attribute Element.VB_UserMemId = 0
   If index > iArray.Count Then
     Dim eMsg As String
     eMsg = IIf(iArray.Count > 0, _
@@ -94,13 +94,13 @@ End Sub
 ' ####################
 
 'AddAfter
-' Adds item after given index.
+' Adds element after given index.
 ' {1,2,3} -> index >= 3 -> Push val
 ' {1,2,3} -> index < 1 -> Unshift val
 ' {} -> index = any -> Push val
-' @param Long index | Index after which will be added an item
-' @param Variant val | One item (String, number, ...) to add into iArray
-' @return Long | Count of items inside iArray
+' @param Long index | Index after which will be added an element
+' @param Variant val | One element (String, number, ...) to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function AddAfter(ByVal index As Long, ByVal val As Variant) As Long
   If Me.Count < 1 Or index >= Me.Count Then
     Me.Push val
@@ -113,13 +113,13 @@ Public Function AddAfter(ByVal index As Long, ByVal val As Variant) As Long
 End Function
 
 'AddArrayAfter
-' Adds items after given index.
+' Adds elements after given index.
 ' {1,2,3} -> index >= 3 -> PushArray val
 ' {1,2,3} -> index < 1 -> UnshiftArray val
 ' {} -> index = any -> PushArray val
-' @param Long index | Index after which will be added an item
-' @param Variant val | Array() or iArray of items to add into iArray
-' @return Long | Count of items inside iArray
+' @param Long index | Index after which will be added an element
+' @param Variant val | Array() or iArray of elements to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function AddArrayAfter(ByVal index As Long, ByVal val As Variant) As Long
   If Me.Count < 1 Or index >= Me.Count Then
     Me.PushArray val
@@ -142,13 +142,13 @@ Public Function AddArrayAfter(ByVal index As Long, ByVal val As Variant) As Long
 End Function
 
 'AddArrayBefore
-' Adds items before given index.
+' Adds elements before given index.
 ' {1,2,3} -> index > 3 -> PushArray val
 ' {1,2,3} -> index <= 1 -> UnshiftArray val
 ' {} -> index = any -> PushArray val
-' @param Long index | Index after which will be added an item
-' @param Variant val | Array() or iArray of items to add into iArray
-' @return Long | Count of items inside iArray
+' @param Long index | Index after which will be added an element
+' @param Variant val | Array() or iArray of elements to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function AddArrayBefore(ByVal index As Long, ByVal val As Variant) As Long
   If Me.Count < 1 Or index > Me.Count Then
     Me.PushArray val
@@ -169,13 +169,13 @@ Public Function AddArrayBefore(ByVal index As Long, ByVal val As Variant) As Lon
 End Function
 
 'AddBefore
-' Adds item before given index.
+' Adds element before given index.
 ' {1,2,3} -> index > 3 -> Push val
 ' {1,2,3} -> index <= 1 -> Unshift val
 ' {} -> index = any -> Push val
-' @param Long index | Index before which will be added an item
-' @param Variant val | One item (String, number, ...) to add into iArray
-' @return Long | Count of items inside iArray
+' @param Long index | Index before which will be added an element
+' @param Variant val | One element (String, number, ...) to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function AddBefore(ByVal index As Long, ByVal val As Variant) As Long
   If Me.Count < 1 Or index > Me.Count Then
     Me.Push val
@@ -208,7 +208,7 @@ End Function
 
 'Contains
 ' Checks if given value is used inside iArray.
-' @param Variant val | One item (String, number, ...) to by checked if it exists in iArray
+' @param Variant val | One element (String, number, ...) to by checked if it exists in iArray
 ' $return Boolean | True = exists, False = doesn't exists
 Public Function Contains(ByVal val As Variant) As Boolean
   Contains = False
@@ -246,21 +246,21 @@ Public Function ContainsAll(ByVal val As Variant) As Boolean
   Loop
 End Function
 
-'CountOccurences
+'CountOccurrences
 ' Checks how many times is given value used inside iArray.
-' @param Variant val | One item (String, number, ...) to by checked
-' @return Long | Count of matched occurences
-Public Function CountOccurences(val As Variant) As Long
-  CountOccurences = 0
+' @param Variant val | One element (String, number, ...) to by checked
+' @return Long | Count of matched occurrences
+Public Function CountOccurrences(val As Variant) As Long
+  CountOccurrences = 0
   Dim el As Variant
   For Each el In iArray
-    If el = val Then CountOccurences = CountOccurences + 1
+    If el = val Then CountOccurrences = CountOccurrences + 1
   Next el
 End Function
 
 'Dequeue
-' Removes an item from the begining of the iArray.
-' @return Variant | Removed item or Empty, if iArray is empty
+' Removes an element from the begining of the iArray.
+' @return Variant | Removed element or Empty, if iArray is empty
 Public Function Dequeue() As Variant
   Dequeue = Shift()
 End Function
@@ -295,9 +295,9 @@ Public Function Difference(ByRef oldArray As iArray, Optional ByVal retType As S
 End Function
 
 'DropLeft
-' Remove n items from the beginning of the iArray. If n > count of iArray items, all items are removed.
-' @param Long n | Number of items to be removed
-' @return iArray | Array of the removed items
+' Remove n elements from the beginning of the iArray. If n > count of iArray elements, all elements are removed.
+' @param Long n | Number of elements to be removed
+' @return iArray | Array of the removed elements
 Public Function DropLeft(ByRef n As Long) As iArray
   Set DropLeft = New iArray
   If n > Me.Count Then n = Me.Count
@@ -310,9 +310,9 @@ Public Function DropLeft(ByRef n As Long) As iArray
 End Function
 
 'DropRight
-' Remove n items from the end of the iArray. If n > count of iArray items, all items are removed.
-' @param Long n | Number of items to be removed
-' @return iArray | Array of the removed items
+' Remove n elements from the end of the iArray. If n > count of iArray elements, all elements are removed.
+' @param Long n | Number of elements to be removed
+' @return iArray | Array of the removed elements
 Public Function DropRight(ByRef n As Long) As iArray
   Set DropRight = New iArray
   If n > Me.Count Then n = Me.Count
@@ -325,17 +325,17 @@ Public Function DropRight(ByRef n As Long) As iArray
 End Function
 
 'Enqueue
-' Adds an item at the end of the iArray.
-' @param Variant val | One item (String, number, ...) to add into iArray
-' @return Long | Count of items inside iArray
+' Adds an element at the end of the iArray.
+' @param Variant val | One element (String, number, ...) to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function Enqueue(ByVal val As Variant) As Long
   Enqueue = Push(val)
 End Function
 
 'EnqueueArray
-' Adds items at the end of the iArray
-' @param Variant val | Array() or iArray of items to add into iArray
-' @return Long | Count of items inside array
+' Adds elements at the end of the iArray
+' @param Variant val | Array() or iArray of elements to add into iArray
+' @return Long | Count of elements inside array
 Public Function EnqueueArray(ByVal val As Variant) As Long
   EnqueueArray = PushArray(val)
 End Function
@@ -346,6 +346,14 @@ End Function
 ' @return Variant | Value of the first element or Empty if iArray is Empty
 Public Function First() As Variant
   First = IIf(Me.Count > 0, Me(1), Empty)
+End Function
+
+'Head
+' Returns all elements of iArray, except last one.
+' @return iArray | Copy of original array, without last element
+Public Function Head() As iArray
+  Set Head = Me.Clone
+  Head.Pop
 End Function
 
 'Join
@@ -366,8 +374,8 @@ Public Function Last() As Variant
 End Function
 
 'Pop
-' Removes an item from the end of the iArray.
-' @return Variant | Removed item or Empty, if iArray is empty
+' Removes an element from the end of the iArray.
+' @return Variant | Removed element or Empty, if iArray is empty
 Public Function Pop() As Variant
   Pop = Empty
   If iArray.Count > 0 Then
@@ -377,18 +385,18 @@ Public Function Pop() As Variant
 End Function
 
 'Push
-' Adds an item at the end of the iArray.
-' @param Variant val | One item (String, number, ...) to add into iArray
-' @return Long | Count of items inside iArray
+' Adds an element at the end of the iArray.
+' @param Variant val | One element (String, number, ...) to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function Push(ByVal val As Variant) As Long
   iArray.Add val
   Push = iArray.Count
 End Function
 
 'PushArray
-' Adds items at the end of the iArray.
-' @param Variant val | Array() or iArray of items to add into iArray
-' @return Long | Count of items inside array
+' Adds elements at the end of the iArray.
+' @param Variant val | Array() or iArray of elements to add into iArray
+' @return Long | Count of elements inside array
 Public Function PushArray(ByVal val As Variant) As Long
   If TypeOf val Is iArray Then
     For i = 1 To val.Count
@@ -403,12 +411,12 @@ Public Function PushArray(ByVal val As Variant) As Long
 End Function
 
 'RemoveDuplicates
-' Keeps only first occurences of the values
-' @return Long | Count of the removed items
+' Keeps only the first occurrence of the value. Affects original array
+' @return Long | Count of the removed elements
 Public Function RemoveDuplicates() As Long
   RemoveDuplicates = 0
   For i = Me.Count To 1 Step -1
-    If Me.CountOccurences(Me(i)) > 1 Then
+    If Me.CountOccurrences(Me(i)) > 1 Then
       Me.Remove i
       RemoveDuplicates = RemoveDuplicates + 1
     End If
@@ -426,8 +434,8 @@ Public Function Reverse() As iArray
 End Function
 
 'Shift
-' Removes an item from the begining of the iArray.
-' @return Variant | Removed item or Empty, if iArray is empty
+' Removes an element from the begining of the iArray.
+' @return Variant | Removed element or Empty, if iArray is empty
 Public Function Shift() As Variant
   Shift = Empty
   If iArray.Count > 0 Then
@@ -453,9 +461,17 @@ Public Function Shuffle() As iArray
   Loop
 End Function
 
+'Tail
+' Returns all elements of iArray, except first one.
+' @return iArray | Copy of original array, without first element
+Public Function Tail() As iArray
+  Set Tail = Me.Clone
+  Tail.Dequeue
+End Function
+
 'ToString
 ' Creates string representation of the iArray.
-' @param String delimiter | Optional character to separate the iArray's items (default = ";")
+' @param String delimiter | Optional character to separate the iArray's elements (default = ";")
 ' @return String | Formated representation of tha iArray
 Public Function ToString(Optional ByVal delimiter As String = ";") As String
   If Me.Count = 0 Then ToString = "{}": Exit Function
@@ -470,10 +486,21 @@ Public Function ToString(Optional ByVal delimiter As String = ";") As String
   Next i
 End Function
 
+'Unique
+' Returns copy of iArray without duplicated values. Original array is not affected
+' @return iArray | iArray with unique values
+Public Function Unique() As iArray
+  Set Unique = New iArray
+  Dim el As Variant
+  For Each el In iArray
+    If Not Unique.Contains(el) Then Unique.Push (el)
+  Next el
+End Function
+
 'Unshift
-' Add an item at the begining of the iArray.
-' @param Variant val | One item (String, number, ...) to add into iArray
-' @return Long | Count of items inside iArray
+' Add an element at the begining of the iArray.
+' @param Variant val | One element (String, number, ...) to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function Unshift(ByVal val As Variant) As Long
   If iArray.Count = 0 Then
     Unshift = Push(val)
@@ -484,9 +511,9 @@ Public Function Unshift(ByVal val As Variant) As Long
 End Function
 
 'UnshiftArray
-' Add items at the begining of the iArray.
-' @param Variant val | Array() or iArray of items to add into iArray
-' @return Long | Count of items inside iArray
+' Add elements at the begining of the iArray.
+' @param Variant val | Array() or iArray of elements to add into iArray
+' @return Long | Count of elements inside iArray
 Public Function UnshiftArray(ByVal val As Variant) As Long
   If TypeOf val Is iArray Then
     For i = val.Count To 1 Step -1
