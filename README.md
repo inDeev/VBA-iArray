@@ -284,7 +284,7 @@ Debug.Print iArr.ToString ' {"First element";"Second element"}
 ### RemoveDuplicates
 Keeps only the first occurrence of the value.
 - **Affects original iArray**
-- The method without interfering with the original iArray is called **.Unique**
+- The method without interfering with the original iArray is called [**Unique**](#Unique)
 
 **@return Long** Count of the removed elements
 ```vba
