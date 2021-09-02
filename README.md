@@ -7,7 +7,7 @@ VBA arrays for 21st century, based on Collections
 ## Methods
 ### Available methods
 [AddAfter](#AddAfter), [AddArrayAfter](#AddArrayAfter), [AddArrayBefore](#AddArrayBefore), [AddBefore](#AddBefore), [Clear](#Clear), [Clone](#Clone), [Contains](#Contains), [ContainsAll *(since v0.3)*](#ContainsAll), [CountOccurrences](#CountOccurrences), [Dequeue](#Dequeue), [Difference](#Difference), [DropLeft](#DropLeft), [DropRight](#DropRight), [Enqueue](#Enqueue), [EnqueueArray](#EnqueueArray), [First](#First), [Head *(since v0.4)*](#Head), [Join](#Join), [Last](#Last), [Pop](#Pop), [Push](#Push), [PushArray](#PushArray), [RemoveDuplicates](#RemoveDuplicates), [Reverse](#Reverse), [Shift](#Shift), [Shuffle](#Shuffle), [Tail *(since v0.4)*](#Tail), [ToString](#ToString), [Unique *(since v0.4)*](#Unique), [Unshift](#Unshift), [UnshiftArray](#UnshiftArray)
-###.(Default Members)
+### (Default Members)
 All elements inside iArray are indexed (from 1 to count of elements) and are available directly by its index number
 ```vba
 dim iArr as new iArray
