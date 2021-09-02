@@ -5,7 +5,8 @@ VBA arrays for 21st century, based on Collections
 >iArray is VBA Class Module which provides easy usage of arrays known from different programming languages.
 
 ## Methods
-
+### Available methods
+[AddAfter](#.AddAfter), [AddArrayAfter](#.AddArrayAfter), [AddArrayBefore](#.AddArrayBefore), [AddBefore](#.AddBefore), [Clear](#.Clear), [Clone](#.Clone), [Contains](#.Contains), [ContainsAll *(since v0.3)*](#.ContainsAll), [CountOccurrences](#.CountOccurrences), [Dequeue](#.Dequeue), [Difference](#.Difference), [DropLeft](#.DropLeft), [DropRight](#.DropRight), [Enqueue](#.Enqueue), [EnqueueArray](#.EnqueueArray), [First](#.First), [Head *(since v0.4)*](#.Head), [Join](#.Join), [Last](#.Last), [Pop](#.Pop), [Push](#.Push), [PushArray](#.PushArray), [RemoveDuplicates](#.RemoveDuplicates), [Reverse](#.Reverse), [Shift](#.Shift), [Shuffle](#.Shuffle), [Tail *(since v0.4)*](#.Tail), [ToString](#.ToString), [Unique *(since v0.4)*](#.Unique), [Unshift](#.Unshift), [UnshiftArray](#.UnshiftArray)
 ### (Default Members)
 All elements inside iArray are indexed (from 1 to count of elements) and are available directly by its index number
 ```vba
@@ -18,8 +19,8 @@ Debug.Print iArr.ToString ' {"a";"b";"c";"Fourth";"e";"f"}
 ### .AddAfter
 Adds element after the given index.  
 - **Affects original iArray**
- - When index >= count of elements, inserts value at the end.
- - When index < count of elements, inserts value at the beginning
+ - When *index* >= count of elements, inserts value at the end.
+ - When *index* < count of elements, inserts value at the beginning
 
 **@param Long index** Index after which will be added an element  
 **@param Variant val** One element (String, number, ...) to add into iArray  
@@ -29,11 +30,11 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfter 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;4;"Hello";5}
 ```
-###AddArrayAfter  
+### .AddArrayAfter  
 Adds elements after the given index.  
 - **Affects original iArray**
-- When index >= count of elements, inserts values at the end.  
-- When index < count of elements, inserts values at the beginning  
+- When *index* >= count of elements, inserts values at the end.  
+- When *index* < count of elements, inserts values at the beginning  
 
 **@param Long index** Index after which will be added elements  
 **@param Variant val** Array() or iArray of elements to add into iArray  
@@ -43,11 +44,11 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfterArray 4, Array(True, False)
 Debug.Print iArr.ToString ' {1;2;3;4;True;False;5}
 ```
-### AddArrayBefore
+### .AddArrayBefore
 Adds elements before the given index.  
 - **Affects original iArray**
-- When index > count of elements, inserts values at the end.  
-- When index <= count of elements, inserts values at the beginning  
+- When *index* > count of elements, inserts values at the end.  
+- When *index* <= count of elements, inserts values at the beginning  
 
 **@param Long index** Index before which will be added elements  
 **@param Variant val** Array() or iArray of elements to add into iArray  
@@ -60,8 +61,8 @@ Debug.Print iArr.ToString ' {1;2;3;True;False;4;5}
 ### .AddBefore
 Adds element before the given index.  
 - **Affects original iArray**
-- When index > count of elements, inserts value at the end.  
-- When index <= count of elements, inserts value at the beginning  
+- When *index* > count of elements, inserts value at the end.  
+- When *index* <= count of elements, inserts value at the beginning  
 
 **@param Long index** Index before which will be added an element  
 **@param Variant val** One element (String, number, ...) to add into iArray  
@@ -104,7 +105,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(1) ' True
 Debug.Print iArr.Contains(5) ' False
 ```
-### .ContainsAll  *(new in v0.3)*
+### .ContainsAll
 Checks if all given values are used inside iArray.
 - **~~Affects original iArray~~**
 
@@ -156,7 +157,7 @@ Set iArr3 = iArr2.Difference(iArr1, "a")
 Debug.Print iArr3.ToString ' {4}
 ```
 ### .DropLeft
-Remove n elements from the beginning of the iArray. If n > count of iArray elements, all elements are removed.
+Remove *n* elements from the beginning of the iArray. If *n* > count of iArray elements, all elements are removed.
 - **Affects original iArray**
 
 **@param Long n** Number of elements to be removed  
@@ -167,7 +168,7 @@ Debug.Print iArr.DropLeft(2).ToString ' {1;2}
 Debug.Print iArr.ToString ' {3;"a";"b";"c"}
 ```
 ### .DropRight
-Remove n elements from the end of the iArray. If n > count of iArray elements, all elements are removed.
+Remove *n* elements from the end of the iArray. If *n* > count of iArray elements, all elements are removed.
 - **Affects original iArray**
 
 **@param Long n** Number of elements to be removed  
@@ -211,7 +212,7 @@ dim iArr as New iArray
 iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.First ' 1
 ```
-### .Head *(new in v0.4)*
+## .Head
 Returns all elements of iArray, except the last one.
 - **~~Affects original iArray~~**
 - If there is less than two elements inside original iArray, empty iArray is returned
@@ -327,7 +328,7 @@ Dim iArrShufled As New iArray
 Set iArrShufled = iArr.Shuffle
 Debug.Print iArrShufled.ToString ' e.g. {"3";"c";4;"a";5;3;"b";1;4;2;True}
 ```
-### .Tail *(new in v0.4)*
+### .Tail
 Returns all elements of iArray, except the first one.
 - **~~Affects original iArray~~**
 - If there is less than two elements inside original iArray, empty iArray is returned
@@ -351,7 +352,7 @@ Dim iArr As New iArray
 iArr.PushArray Array("a", 123456, Empty, "...", True)
 Debug.Print iArr.ToString ' {"a";123456;;"...";True}
 ```
-### .Unique *(new in v0.4)*
+### .Unique
 Returns copy of iArray without duplicated values.
 - **~~Affects original iArray~~**
 
