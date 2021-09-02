@@ -6,7 +6,7 @@ VBA arrays for 21st century, based on Collections
 
 ## Methods
 ### Available methods
-[AddAfter](#.AddAfter), [AddArrayAfter](#.AddArrayAfter), [AddArrayBefore](#.AddArrayBefore), [AddBefore](#.AddBefore), [Clear](#.Clear), [Clone](#.Clone), [Contains](#.Contains), [ContainsAll *(since v0.3)*](#.ContainsAll), [CountOccurrences](#.CountOccurrences), [Dequeue](#.Dequeue), [Difference](#.Difference), [DropLeft](#.DropLeft), [DropRight](#.DropRight), [Enqueue](#.Enqueue), [EnqueueArray](#.EnqueueArray), [First](#.First), [Head *(since v0.4)*](#.Head), [Join](#.Join), [Last](#.Last), [Pop](#.Pop), [Push](#.Push), [PushArray](#.PushArray), [RemoveDuplicates](#.RemoveDuplicates), [Reverse](#.Reverse), [Shift](#.Shift), [Shuffle](#.Shuffle), [Tail *(since v0.4)*](#.Tail), [ToString](#.ToString), [Unique *(since v0.4)*](#.Unique), [Unshift](#.Unshift), [UnshiftArray](#.UnshiftArray)
+[AddAfter](#AddAfter), [AddArrayAfter](#AddArrayAfter), [AddArrayBefore](#AddArrayBefore), [AddBefore](#AddBefore), [Clear](#Clear), [Clone](#Clone), [Contains](#Contains), [ContainsAll *(since v0.3)*](#ContainsAll), [CountOccurrences](#CountOccurrences), [Dequeue](#Dequeue), [Difference](#Difference), [DropLeft](#DropLeft), [DropRight](#DropRight), [Enqueue](#Enqueue), [EnqueueArray](#EnqueueArray), [First](#First), [Head *(since v0.4)*](#Head), [Join](#Join), [Last](#Last), [Pop](#Pop), [Push](#Push), [PushArray](#PushArray), [RemoveDuplicates](#RemoveDuplicates), [Reverse](#Reverse), [Shift](#Shift), [Shuffle](#Shuffle), [Tail *(since v0.4)*](#Tail), [ToString](#ToString), [Unique *(since v0.4)*](#Unique), [Unshift](#Unshift), [UnshiftArray](#UnshiftArray)
 ### (Default Members)
 All elements inside iArray are indexed (from 1 to count of elements) and are available directly by its index number
 ```vba
@@ -16,7 +16,7 @@ Debug.Print iArr(2) ' "b"
 iArr(4) = "Fourth"
 Debug.Print iArr.ToString ' {"a";"b";"c";"Fourth";"e";"f"}
 ```
-### .AddAfter
+### AddAfter
 Adds element after the given index.  
 - **Affects original iArray**
  - When *index* >= count of elements, inserts value at the end.
@@ -30,7 +30,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfter 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;4;"Hello";5}
 ```
-### .AddArrayAfter  
+### AddArrayAfter  
 Adds elements after the given index.  
 - **Affects original iArray**
 - When *index* >= count of elements, inserts values at the end.  
@@ -44,7 +44,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddAfterArray 4, Array(True, False)
 Debug.Print iArr.ToString ' {1;2;3;4;True;False;5}
 ```
-### .AddArrayBefore
+### AddArrayBefore
 Adds elements before the given index.  
 - **Affects original iArray**
 - When *index* > count of elements, inserts values at the end.  
@@ -58,7 +58,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddArrayBefore 4, Array(True, False)
 Debug.Print iArr.ToString ' {1;2;3;True;False;4;5}
 ```
-### .AddBefore
+### AddBefore
 Adds element before the given index.  
 - **Affects original iArray**
 - When *index* > count of elements, inserts value at the end.  
@@ -72,7 +72,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddBefore 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;"Hello";4;5}
 ```
-### .Clear
+### Clear
 Empties iArray. Affects original iArray.
 - **Affects original iArray**
 ```vba
@@ -81,7 +81,7 @@ Debug.Print iArr.ToString ' {1;2;3;4;5}
 iArr.Clear
 Debug.Print iArr.ToString ' {}
 ```
-### .Clone
+### Clone
 Makes a hard copy of the iArray. 
 - **~~Affects original iArray~~**
 
@@ -94,7 +94,7 @@ Set iArrCloned = arrToClone.Clone
 iArr.Clear
 Debug.Print iArrCloned.ToString ' {"3";4;1;2;3;4;5;"a";"b";"c";True}
 ```
-### .Contains
+### Contains
 Checks if given value is used inside iArray.  
 - **~~Affects original iArray~~**
 
@@ -105,7 +105,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(1) ' True
 Debug.Print iArr.Contains(5) ' False
 ```
-### .ContainsAll
+### ContainsAll
 Checks if all given values are used inside iArray.
 - **~~Affects original iArray~~**
 
@@ -116,7 +116,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(Array(1, 2)) ' True
 Debug.Print iArr.Contains(Array(1, 2, 5)) ' False
 ```
-### .CountOccurrences
+### CountOccurrences
 Checks how many times is given value used inside iArray.
 - **~~Affects original iArray~~**
 
@@ -127,7 +127,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.CountOccurrences(2) ' 3
 Debug.Print iArr.CountOccurrences(4) ' 0
 ```
-### .Dequeue
+### Dequeue
 Removes an element from the beginning of the iArray.  
 - **Affects original iArray**
 
@@ -138,7 +138,7 @@ iArr.PushArray Array("First element","Second element","Queued","Next queued")
 Debug.Print iArr.Dequeue  ' "First element"
 Debug.Print iArr.ToString ' {"Second element";"Queued";"Next queued"}
 ```
-### .Difference
+### Difference
 Checks for number of differences between two arrays, what was added/deleted or combination.
 - **~~Affects original iArray~~**
 
@@ -156,7 +156,7 @@ Debug.Print iArr3.ToString ' {1}
 Set iArr3 = iArr2.Difference(iArr1, "a")
 Debug.Print iArr3.ToString ' {4}
 ```
-### .DropLeft
+### DropLeft
 Remove *n* elements from the beginning of the iArray. If *n* > count of iArray elements, all elements are removed.
 - **Affects original iArray**
 
@@ -167,7 +167,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
 Debug.Print iArr.DropLeft(2).ToString ' {1;2}
 Debug.Print iArr.ToString ' {3;"a";"b";"c"}
 ```
-### .DropRight
+### DropRight
 Remove *n* elements from the end of the iArray. If *n* > count of iArray elements, all elements are removed.
 - **Affects original iArray**
 
@@ -178,7 +178,7 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, "a", "b", "c")
 Debug.Print iArr.DropRight(2).ToString ' {"b";"c"}
 Debug.Print iArr.ToString ' {1;2;3;"a"}
 ```
-### .Enqueue
+### Enqueue
 Adds an element at the end of the iArray *(alias for **.Push**)*.
 - **Affects original iArray**
 
@@ -190,7 +190,7 @@ iArr.PushArray Array("First element", "Second element")
 iArr.Enqueue "Queued"
 Debug.Print iArr.ToString ' {First element";"Second element";"Queued"}
 ```
-### .EnqueueArray
+### EnqueueArray
 Adds elements at the end of the iArray *(alias for **.PushArray**)*.
 - **Affects original iArray**
 
@@ -202,7 +202,7 @@ iArr.PushArray Array("First element", "Second element")
 iArr.EnqueueArray Array("Queued","Next queued")
 Debug.Print iArr.ToString ' {"First element";"Second element";"Queued";"Next queued"}
 ```
-### .First
+### First
 Returns value of the first element of the iArray.  
 - **~~Affects original iArray~~**
 
@@ -225,7 +225,7 @@ Dim tailArr As New iArray5
 Set tailArr = iArr.Tail
 Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
 ```
-### .Join
+### Join
 Joins two iArrays.  
 - **~~Affects original iArrays~~**
 
@@ -238,7 +238,7 @@ Dim iArrJoined As iArray
 Set iArrJoined = iArr1.Join(iArr2)
 Debug.Print arrJoined.ToString ' {1;2;3;"a";"b";"c";4;5;6;"d";"e";"f"}
 ```
-### .Last
+### Last
 Returns value of the last element of the iArray. 
 - **~~Affects original iArray~~**
 
@@ -248,7 +248,7 @@ dim iArr as New iArray
 iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.Last ' 5
 ```
-### .Pop
+### Pop
 Removes an element from the end of the iArray.  
 - **Affects original iArray**
 
@@ -259,7 +259,7 @@ iArr.PushArray Array("First element", "Second element")
 Debug.Print iArr.Pop  ' "Second element"
 Debug.Print iArr.ToString ' {"First element"}
 ```
-### .Push
+### Push
 Adds an element at the end of the iArray.  
 - **Affects original iArray**
 
@@ -270,7 +270,7 @@ dim iArr as new iArray
 iArr.Push "First element"
 Debug.Print iArr.ToString ' {"First element"}
 ```
-### .PushArray
+### PushArray
 Adds elements at the end of the iArray.  
 - **Affects original iArray**
 
@@ -281,7 +281,7 @@ dim iArr as new iArray
 iArr.PushArray Array("First element", "Second element")
 Debug.Print iArr.ToString ' {"First element";"Second element"}
 ```
-### .RemoveDuplicates
+### RemoveDuplicates
 Keeps only the first occurrence of the value.
 - **Affects original iArray**
 - The method without interfering with the original iArray is called **.Unique**
@@ -293,7 +293,7 @@ iArr.PushArray Array(1, 2, "a", 2, 3, 2, 3.14, "b", True, 4, "a")
 Debug.Print iArr.RemoveDuplicates ' 3
 Debug.Print iArr.ToString ' {1;2;"a";3;3.14;"b";True;4}
 ```
-### .Reverse
+### Reverse
 Reverses the content of the iArray.  
 - **~~Affects original iArray~~**
 
@@ -305,7 +305,7 @@ Dim iArrRev As New iArray
 Set iArrRev = iArr.Reverse
 Debug.Print iArrRev.ToString ' {True;"c";"b";"a";5;4;3;2;1;4;"3"}
 ```
-### .Shift
+### Shift
 Removes an element from the beginning of the iArray.  
 - **Affects original iArray**
 
@@ -316,7 +316,7 @@ iArr.PushArray Array("First element", "Second element")
 Debug.Print iArr.Shift  ' "First element"
 Debug.Print iArr.ToString ' {"Second element"}
 ```
-### .Shuffle
+### Shuffle
 Randomly mixes content of the iArray.  
 - **~~Affects original iArray~~**
 
@@ -328,7 +328,7 @@ Dim iArrShufled As New iArray
 Set iArrShufled = iArr.Shuffle
 Debug.Print iArrShufled.ToString ' e.g. {"3";"c";4;"a";5;3;"b";1;4;2;True}
 ```
-### .Tail
+### Tail
 Returns all elements of iArray, except the first one.
 - **~~Affects original iArray~~**
 - If there is less than two elements inside original iArray, empty iArray is returned
@@ -341,7 +341,7 @@ Dim tailArr As New iArray5
 Set tailArr = iArr.Tail
 Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
 ```
-### .ToString
+### ToString
 Creates string representation of the iArray.  
 - **~~Affects original iArray~~**
 
@@ -352,7 +352,7 @@ Dim iArr As New iArray
 iArr.PushArray Array("a", 123456, Empty, "...", True)
 Debug.Print iArr.ToString ' {"a";123456;;"...";True}
 ```
-### .Unique
+### Unique
 Returns copy of iArray without duplicated values.
 - **~~Affects original iArray~~**
 
@@ -364,7 +364,7 @@ Dim uniqueArr As New iArray
 Set uniqueArr = iArr.Unique
 Debug.Print iArr.Unique.ToString ' {"3";4;1;2;3;5;"a";"b";"c";True}
 ```
-### .Unshift
+### Unshift
 Adds an element at the beginning of the iArray.  
 - **Affects original iArray**
 
@@ -376,7 +376,7 @@ iArr.PushArray Array("First element", "Second element")
 iArr.Unshift "1st"
 Debug.Print iArr.ToString ' {"1st";"First element";"Second element"}
 ```
-### .UnshiftArray
+### UnshiftArray
 Adds elements at the beginning of the iArray. 
 - **Affects original iArray**
 
