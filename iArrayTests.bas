@@ -177,6 +177,49 @@ Public Sub iArrayTest()
   Dim headArr As New iArray
   Set headArr = tailArr.Head
   Call validate("Head", "{4;1;2;3;4;5;""a"";""b"";""c""}", headArr.ToString)
+  
+  ' ##### CONTAINS ONLY NUMERIC TEST
+  Debug.Print vbCrLf & " #### Contains Only Numeric test"
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, "3.1415", 2, "1E-2")
+  Call validate("ContainsOnlyNumeric", True, iArr.ContainsOnlyNumeric)
+  Set iArr = New iArray
+  iArr.PushArray Array("3a", 4, 3.1415, 2, "1E-2")
+  Call validate("ContainsOnlyNumeric", False, iArr.ContainsOnlyNumeric)
+  
+  ' ##### AVERAGE / SUM TEST
+  Debug.Print vbCrLf & " #### Average / Sum test"
+  Set iArr = New iArray
+  iArr.PushArray Array("3a", 4, "3.1415", 2, "1E-2")
+  Call validate("Sum", "NaN", iArr.Sum)
+  Set iArr = New iArray
+  iArr.PushArray Array("3", 4, 3.1415, 2, "1E-2")
+  Call validate("Sum", 12.1515, iArr.Sum)
+  Call validate("Average", 2.4303, iArr.Avg)
+  
+  ' ##### OCCURRENCE INDEXES TEST
+  Debug.Print vbCrLf & " #### Occurence Indexes test"
+  Set iArr = New iArray
+  iArr.PushArray Array(1, 2, True, "Abc", 2, "1", 3, 1, 2)
+  Call validate("Occurrence indexes", "{1;8}", iArr.OccurenceIndexes(1).ToString)
+  
+  ' ##### INTERSECT ARRAYS TEST
+  Debug.Print vbCrLf & " #### Intersect arrays test"
+  Set iArr1 = New iArray
+  iArr1.PushArray Array(1, 2, 3, "a", "b", "a")
+  Set iArr2 = New iArray
+  iArr2.PushArray Array(3, 2, 6, "a", "a", "f")
+  Set iArr = iArr1.Intersect(iArr2)
+  Call validate("Intersect", "{2;3;""a""}", iArr.ToString)
+  
+  ' ##### UNION ARRAYS TEST
+  Debug.Print vbCrLf & " #### Union arrays test"
+  Set iArr1 = New iArray
+  iArr1.PushArray Array(1, 2, 3, "a", "b", "a")
+  Set iArr2 = New iArray
+  iArr2.PushArray Array(3, 2, 6, "a", "a", "f")
+  Set iArr = iArr1.Union(iArr2)
+  Call validate("Union", "{1;2;3;""a"";""b"";6;""f""}", iArr.ToString)
 End Sub
 
 Private Sub validate(name As String, expected, actual As String)

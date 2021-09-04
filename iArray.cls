@@ -30,7 +30,7 @@ Option Explicit
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 '
-' Version of iArray: 0.4
+' Version of iArray: 1.0
 
 Private iArray As Collection
 Private i As Long ' Counter
@@ -129,12 +129,12 @@ Public Function AddArrayAfter(ByVal index As Long, ByVal val As Variant) As Long
     If TypeOf val Is iArray Then
       For i = 1 To val.Count
         Me.Add val(i), aft:=index
-        index = index + 1
+        Inc index
       Next i
     Else
       For i = LBound(val) To UBound(val)
         Me.Add val(i), aft:=index
-        index = index + 1
+        Inc index
       Next i
     End If
   End If
@@ -187,6 +187,14 @@ Public Function AddBefore(ByVal index As Long, ByVal val As Variant) As Long
   AddBefore = Me.Count
 End Function
 
+'Avg
+' Calculates the average of the numeric iArray.
+' @return Variant | Average value / "NaN" if iArray contains non-numeric value(s)
+Public Function Avg() As Variant
+  If Not Me.ContainsOnlyNumeric Then Avg = "NaN": Exit Function
+  Avg = Me.Sum / Me.Count
+End Function
+
 'Clear
 ' Empties iArray
 Public Function Clear() As Boolean
@@ -220,30 +228,25 @@ End Function
 
 'ContainsAll
 ' Checks if all given values are used inside iArray.
-' @param Array/iArray val | array of values to by checked if it exists in iArray
+' @param Variant val | values to by checked if it exists in iArray
 ' $return Boolean | True = all exists, False = one ore more values doesn't exists
 Public Function ContainsAll(ByVal val As Variant) As Boolean
-  Dim iValues As New iArray
-  If Not TypeOf val Is iArray And IsArray(val) Then
-    iValues.PushArray (val)
-  ElseIf TypeOf val Is iArray Then
-    Set iValues = val
-  End If
   ContainsAll = False
-  Dim totalValues As Integer: totalValues = iValues.Count
-  Dim foundValues As Integer: foundValues = 0
-  Dim iValue As Variant
-  Dim el As Variant
-  Do While iValues.Count > 0
-    iValue = iValues.Dequeue
-    For Each el In iArray
-      If el = iValue Then
-        foundValues = foundValues + 1
-        If foundValues = totalValues Then ContainsAll = True: Exit Function
-        Exit For
-      End If
-    Next el
-  Loop
+  Dim foundOccurrences As Integer: foundOccurrences = 0
+  Dim values As New iArray
+  If Not TypeOf val Is iArray Then
+    If IsArray(val) Then
+      values.PushArray (val)
+    Else
+      values.Push (val)
+    End If
+  Else
+    Set values = val
+  End If
+  For i = 1 To values.Count
+    If Me.Contains(values(i)) Then Inc foundOccurrences
+  Next i
+  If foundOccurrences = values.Count Then ContainsAll = True
 End Function
 
 'CountOccurrences
@@ -254,7 +257,7 @@ Public Function CountOccurrences(val As Variant) As Long
   CountOccurrences = 0
   Dim el As Variant
   For Each el In iArray
-    If el = val Then CountOccurrences = CountOccurrences + 1
+    If el = val Then Inc CountOccurrences
   Next el
 End Function
 
@@ -340,7 +343,6 @@ Public Function EnqueueArray(ByVal val As Variant) As Long
   EnqueueArray = PushArray(val)
 End Function
 
-
 'First
 ' Returns value of the first element of the iArray.
 ' @return Variant | Value of the first element or Empty if iArray is Empty
@@ -354,6 +356,31 @@ End Function
 Public Function Head() As iArray
   Set Head = Me.Clone
   Head.Pop
+End Function
+
+'Intersect
+' Search for element that exists in both iArrays.
+' @param iArray intArray | iArray to be intersected with current iArray
+' @return iArray | Intersected values
+Public Function Intersect(ByRef intersectedArr As iArray) As iArray
+  Set Intersect = New iArray
+  Dim el As Variant
+  For Each el In iArray
+    If intersectedArr.Contains(el) Then
+      If Not Intersect.Contains(el) Then Intersect.Push (el)
+    End If
+  Next el
+End Function
+
+'ContainsOnlyNumeric
+' Verify that all elements are numbers or convertable to numbers
+' $return Boolean | True = contains only numeric values, False = contains inconvertible values
+Public Function ContainsOnlyNumeric() As Boolean
+  ContainsOnlyNumeric = True
+  Dim el As Variant
+  For Each el In iArray
+    If Not IsNumeric(el) Then ContainsOnlyNumeric = False: Exit Function
+  Next el
 End Function
 
 'Join
@@ -371,6 +398,16 @@ End Function
 ' @return Variant | Value of the last element or Empty if iArray is Empty
 Public Function Last() As Variant
   Last = IIf(Me.Count > 0, Me(Me.Count), Empty)
+End Function
+
+'OccurrenceIndexes
+' Returns all indexes of a value in iArray.
+' @return iArray | iArray containing indexes of occurrence
+Public Function OccurenceIndexes(val As Variant) As iArray
+  Set OccurenceIndexes = New iArray
+  For i = 1 To Me.Count
+    If iArray(i) = val Then OccurenceIndexes.Push (i)
+  Next i
 End Function
 
 'Pop
@@ -418,7 +455,7 @@ Public Function RemoveDuplicates() As Long
   For i = Me.Count To 1 Step -1
     If Me.CountOccurrences(Me(i)) > 1 Then
       Me.Remove i
-      RemoveDuplicates = RemoveDuplicates + 1
+      Inc RemoveDuplicates
     End If
   Next i
 End Function
@@ -461,6 +498,18 @@ Public Function Shuffle() As iArray
   Loop
 End Function
 
+'Sum
+' Calculates the sum of the numeric iArray.
+' @return Variant | Sum value / "NaN" if iArray contains non-numeric value(s)
+Public Function Sum() As Variant
+  If Not Me.ContainsOnlyNumeric Then Sum = "NaN": Exit Function
+  Sum = 0
+  Dim el As Variant
+  For Each el In iArray
+    Sum = Sum + el
+  Next el
+End Function
+
 'Tail
 ' Returns all elements of iArray, except first one.
 ' @return iArray | Copy of original array, without first element
@@ -484,6 +533,16 @@ Public Function ToString(Optional ByVal delimiter As String = ";") As String
     If VarType(Me(i)) = vbString Then ToString = ToString + Chr$(34)
     If i = iArray.Count Then ToString = ToString + "}"
   Next i
+End Function
+
+'Union
+' Combines both iArrays and removes duplicities
+' @param iArray uArray | iArray to be unioned with current iArray
+' @return iArray | Combined values without duplicities
+Public Function Union(ByRef uArr As iArray) As iArray
+  Set Union = Me.Clone
+  Union.PushArray uArr
+  Union.RemoveDuplicates
 End Function
 
 'Unique
@@ -531,6 +590,10 @@ End Function
 ' #####################
 ' # PRIVATE FUNCTIONS #
 ' #####################
+Sub Inc(ByRef i)
+   i = i + 1
+End Sub
+
 Private Function rangeToArray(ByVal rng As Range) As Variant
   rangeToArray = rng.Value
 End Function

@@ -6,7 +6,21 @@ VBA arrays for 21st century, based on Collections
 
 ## Methods
 ### Available methods
-[AddAfter](#AddAfter), [AddArrayAfter](#AddArrayAfter), [AddArrayBefore](#AddArrayBefore), [AddBefore](#AddBefore), [Clear](#Clear), [Clone](#Clone), [Contains](#Contains), [ContainsAll *(since v0.3)*](#ContainsAll), [CountOccurrences](#CountOccurrences), [Dequeue](#Dequeue), [Difference](#Difference), [DropLeft](#DropLeft), [DropRight](#DropRight), [Enqueue](#Enqueue), [EnqueueArray](#EnqueueArray), [First](#First), [Head *(since v0.4)*](#Head), [Join](#Join), [Last](#Last), [Pop](#Pop), [Push](#Push), [PushArray](#PushArray), [RemoveDuplicates](#RemoveDuplicates), [Reverse](#Reverse), [Shift](#Shift), [Shuffle](#Shuffle), [Tail *(since v0.4)*](#Tail), [ToString](#ToString), [Unique *(since v0.4)*](#Unique), [Unshift](#Unshift), [UnshiftArray](#UnshiftArray)
+[AddAfter](#AddAfter), [AddArrayAfter](#AddArrayAfter), [AddArrayBefore](#AddArrayBefore), [AddBefore](#AddBefore), [Avg *(since v1.0)*](#Avg)  
+[Clear](#Clear), [Clone](#Clone), [Contains](#Contains), [ContainsAll *(since v0.3)*](#ContainsAll), [ContainsOnlyNumeric *(since v1.0)*](#ContainsOnlyNumeric), [CountOccurrences](#CountOccurrences)  
+[Dequeue](#Dequeue), [Difference](#Difference), [DropLeft](#DropLeft), [DropRight](#DropRight)  
+[Enqueue](#Enqueue), [EnqueueArray](#EnqueueArray)  
+[First](#First)  
+[Head *(since v0.4)*](#Head)  
+[Intersect *(since v1.0)*](#Intersect)  
+[Join](#Join)  
+[Last](#Last)  
+[OccurrenceIndexes *(since v1.0)*](#OccurrenceIndexes)  
+[Pop](#Pop), [Push](#Push), [PushArray](#PushArray)  
+[RemoveDuplicates](#RemoveDuplicates), [Reverse](#Reverse)  
+[Shift](#Shift), [Shuffle](#Shuffle), [Sum *(since v1.0)*](#Sum)  
+[Tail *(since v0.4)*](#Tail), [ToString](#ToString)  
+[Union *(since v1.0)*](#Union), [Unique *(since v0.4)*](#Unique), [Unshift](#Unshift), [UnshiftArray](#UnshiftArray)
 ### (Default Members)
 All elements inside iArray are indexed (from 1 to count of elements) and are available directly by its index number
 ```vba
@@ -72,6 +86,16 @@ Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
 iArr.AddBefore 4, "Hello"
 Debug.Print iArr.ToString ' {1;2;3;"Hello";4;5}
 ```
+### .Avg
+Calculates the average of the numeric iArray. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@return Variant** Average value / "NaN" if iArray contains non-numeric value(s)
+```vba
+Dim iArr As New iArray
+iArr.PushArray Array("3", 4, 3.1415, 2, "1E-2")
+Debug.Print iArr.Avg ' 2.4303
+```
 ### .Clear
 Empties iArray. Affects original iArray. [Return to available methods](#Available-methods)
 - **Affects original iArray**
@@ -115,6 +139,17 @@ Checks if all given values are used inside iArray. [Return to available methods]
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
 Debug.Print iArr.Contains(Array(1, 2)) ' True
 Debug.Print iArr.Contains(Array(1, 2, 5)) ' False
+```
+### .ContainsOnlyNumeric
+Verify that all elements are numbers or convertable to numbers. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@return Boolean** True = contains only numeric values, False = contains inconvertible values
+```vba
+Dim iArr As New iArray: iArr.PushArray Array("3", 4, "3.1415", 2, "1E-2")
+Debug.Print iArr.ContainsOnlyNumeric ' True
+iArr.Push("3a")
+Debug.Print iArr.ContainsOnlyNumeric ' False
 ```
 ### .CountOccurrences
 Checks how many times is given value used inside iArray. [Return to available methods](#Available-methods)
@@ -225,6 +260,19 @@ Dim tailArr As New iArray5
 Set tailArr = iArr.Tail
 Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
 ```
+### .Intersect
+Search for element that exists in both iArrays. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@param iArray intArray** iArray to be intersected with current iArray
+**@return iArray** iArray with intersected values
+```vba
+Dim iArr1 As New iArray: iArr1.PushArray Array(1, 2, 3, "a", "b", "a")
+Dim iArr2 As New iArray: iArr2.PushArray Array(3, 2, 6, "a", "a", "f")
+Dim iArrUnion As iArray
+Set iArrUnion = iArr1.Intersect(iArr2)
+Debug.Print arrJoined.ToString ' {2;3;"a"}
+```
 ### .Join
 Joins two iArrays. [Return to available methods](#Available-methods)  
 - **~~Affects original iArrays~~**
@@ -247,6 +295,16 @@ Returns value of the last element of the iArray. [Return to available methods](#
 dim iArr as New iArray
 iArr.PushArray Array(1, 2, 3, 4, 5)
 Debug.Print iArr.Last ' 5
+```
+### .OccurrenceIndexes
+Returns all indexes of a value in iArray. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@return iArray** iArray containing indexes of occurrence
+```vba
+dim iArr as New iArray
+iArr.PushArray Array(1, 2, True, "Abc", 2, "1", 3, 1, 2)
+Debug.Print iArr.OccurenceIndexes(1).ToString ' {1,8}
 ```
 ### .Pop
 Removes an element from the end of the iArray. [Return to available methods](#Available-methods)  
@@ -328,6 +386,16 @@ Dim iArrShufled As New iArray
 Set iArrShufled = iArr.Shuffle
 Debug.Print iArrShufled.ToString ' e.g. {"3";"c";4;"a";5;3;"b";1;4;2;True}
 ```
+### .Sum
+Calculates the sum of the numeric iArray. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@return Variant** Sum value / "NaN" if iArray contains non-numeric value(s)
+```vba
+Dim iArr As New iArray
+iArr.PushArray Array("3", 4, 3.1415, 2, "1E-2")
+Debug.Print iArr.Sum ' 12.1515
+```
 ### .Tail
 Returns all elements of iArray, except the first one. [Return to available methods](#Available-methods)
 - **~~Affects original iArray~~**
@@ -351,6 +419,19 @@ Creates string representation of the iArray. [Return to available methods](#Avai
 Dim iArr As New iArray
 iArr.PushArray Array("a", 123456, Empty, "...", True)
 Debug.Print iArr.ToString ' {"a";123456;;"...";True}
+```
+### .Union
+Combines both iArrays and removes duplicities. [Return to available methods](#Available-methods)
+- **~~Affects original iArray~~**
+
+**@param iArray uArray** iArray to be unioned with current iArray
+**@return iArray** iArray with combined values without duplicities
+```vba
+Dim iArr1 As New iArray: iArr1.PushArray Array(1, 2, 3, "a", "b", "a")
+Dim iArr2 As New iArray: iArr2.PushArray Array(3, 2, 6, "a", "a", "f")
+Dim iArrUnion As iArray
+Set iArrUnion = iArr1.Union(iArr2)
+Debug.Print arrJoined.ToString ' {1;2;3;"a";"b";6;"f"}
 ```
 ### .Unique
 Returns copy of iArray without duplicated values. [Return to available methods](#Available-methods)
@@ -388,19 +469,6 @@ iArr.PushArray Array("First element", "Second element")
 iArr.UnshiftArray Array("1st","2nd")
 Debug.Print iArr.ToString ' {"1st";"2nd";"First element";"Second element"}
 ```
-## TBD
-- **.OccurrenceIndexes**
-  Returns all indexes of a value in iArray. If nothing found returns empty iArray
-- **.Intersect**
-  Returns iArray which contains only elements which are same in two given iArrays
-- **.Union**
-  Returns iArray which contains only elements which are same in two given iArrays, without duplicates
-- **.IsNumericArray**
-  Returns True if all values are numbers
-- **.Sum**
-  Returns sum of elements in iArray. Only for numeric iArray
-- **.Average**
-  Returns average value of elements in iArray. Only for numeric iArray
 
 ## Installation
 Just import **iArray.cls** into your project, and you can directly use it
