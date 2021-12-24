@@ -97,7 +97,7 @@ iArr.PushArray Array("3", 4, 3.1415, 2, "1E-2")
 Debug.Print iArr.Avg ' 2.4303
 ```
 ### .Clear
-Empties iArray. Affects original iArray. [Return to available methods](#Available-methods)
+Empties iArray. [Return to available methods](#Available-methods)
 - **Affects original iArray**
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 3, 4, 5)
@@ -155,7 +155,7 @@ Debug.Print iArr.ContainsOnlyNumeric ' False
 Checks how many times is given value used inside iArray. [Return to available methods](#Available-methods)
 - **~~Affects original iArray~~**
 
-**@param Variant val** One element (String, number, ...) to be checked for occurrence in iArray
+**@param Variant val** One element (String, number, ...) to be checked for occurrence in iArray  
 **@return Long** Count of matched occurrences
 ```vba
 Dim iArr As New iArray: iArr.PushArray Array(1, 2, 2, 1, 3, 1, 2)
@@ -256,9 +256,9 @@ Returns all elements of iArray, except the last one. [Return to available method
 ```vba
 Set iArr = New iArray
 iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
-Dim tailArr As New iArray5
-Set tailArr = iArr.Tail
-Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
+Dim headArr As New iArray
+Set headArr = iArr.Head
+Debug.Print headArr.ToString ' {"3";4;1;2;3;4;5;"a";"b";"c"}
 ```
 ### .Intersect
 Search for element that exists in both iArrays. [Return to available methods](#Available-methods)
@@ -405,9 +405,9 @@ Returns all elements of iArray, except the first one. [Return to available metho
 ```vba
 Set iArr = New iArray
 iArr.PushArray Array("3", 4, 1, 2, 3, 4, 5, "a", "b", "c", True)
-Dim tailArr As New iArray5
+Dim tailArr As New iArray
 Set tailArr = iArr.Tail
-Debug.Print tailArr.ToString ' {4;1;2;3;4;5;""a"";""b"";""c"";True}
+Debug.Print tailArr.ToString ' {4;1;2;3;4;5;"a";"b";"c";True}
 ```
 ### .ToString
 Creates string representation of the iArray. [Return to available methods](#Available-methods)  
